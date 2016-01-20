@@ -1,0 +1,47 @@
+.sidebar-view {
+
+}
+
+.main-view {
+
+}
+
+.builds-options {
+
+}
+
+.builds-container {
+
+}
+
+.build-outer-box {
+	padding: 10px;
+}
+
+.build-inner-box {
+	height: 50px;
+	border: solid dimgrey 2px;
+}
+
+.projects-options {
+	padding: 10px 10px 10px 20px;
+}
+
+.projects-container {
+	padding: 10px
+}
+
+.project-outer-box {
+	background-color: white;
+	padding: 10px;
+	height: 150px;
+}
+
+.project-inner-box {
+	height: 130px;
+	border: solid dimgrey 2px;
+	background-color: #D3FFD3;
+	border-color: black;
+	color: black;
+}
+/*#D3FFD3*/
