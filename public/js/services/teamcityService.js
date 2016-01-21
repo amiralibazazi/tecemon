@@ -57,7 +57,7 @@ teamcityService.service('teamcityService', ['$http', '$q', function($http, $q) {
 	}
 
 	teamcityService.getLastCompletedBuildFor = function(buildTypeId) {
-		return $http.get("https://teamcity.dev.crwd.mx/app/rest/buildTypes/id:"+buildTypeId+"/builds")
+		return $http.get("https://teamcity.dev.crwd.mx/app/rest/buildTypes/id:"+buildTypeId+"/builds/?locator=branch:(name:master)")
 					.then(
 						function(response) {
 							if (typeof response.data.build != 'undefined') {
