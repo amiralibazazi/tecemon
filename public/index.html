@@ -32,7 +32,7 @@
 	<div class="main-view container">
 		<!-- Tab List -->
 		<div class="col-md-2">
-			<img src="./resources/Crowdmix_C_Icon_Turquoise_Pink_RGB.png" class="crowdmix-logo">
+			<img src="./resources/Crowdmix_C_Icon_Mono_RGB_White.png" class="crowdmix-logo">
 		</div>
 		<ul class="nav nav-tabs col-md-10">
 			<li  class="active"><a data-toggle="tab" href="#builds">Builds</a></li>
@@ -50,53 +50,14 @@
 				</div>
 
 				<div class="builds-container container">
-					<div ng-repeat="build in allLastCompletedBuilds">
+					<div ng-repeat="build in allLastCompletedBuilds track by $index">
 						<div class="col-md-3 col-sm-6 col-xl-2 build-outer-box">
 							<div class="build-inner-box-success">
-								<p>BuildTypeId: {{ build.id }}</p>
-								<p>BuildName: {{ build.name }}</p>
+								<p>BuildId: {{ build.id }}</p>
+								<p>BuildTypeId: {{ build.buildTypeId }}</p>
 							</div>
 						</div>
 					</div>
-					
-					<!-- Style Samples: -->
-					<div class="col-md-3 col-sm-6 col-xl-2 build-outer-box">
-						<div class="build-inner-box-failure">
-							<p>BuildTypeId: sample build ID</p>
-							<p>BuildName: sample build name</p>
-						</div>
-					</div>
-					<div class="col-md-3 col-sm-6 col-xl-2 build-outer-box">
-						<div class="build-inner-box-pending">
-							<p>BuildTypeId: sample build ID</p>
-							<p>BuildName: sample build name</p>
-						</div>
-					</div>
-					<div class="col-md-3 col-sm-6 col-xl-2 build-outer-box">
-						<div class="build-inner-box-success">
-							<p>BuildTypeId: sample build ID</p>
-							<p>BuildName: sample build name</p>
-						</div>
-					</div>
-					<div class="col-md-3 col-sm-6 col-xl-2 build-outer-box">
-						<div class="build-inner-box-success">
-							<p>BuildTypeId: sample build ID</p>
-							<p>BuildName: sample build name</p>
-						</div>
-					</div>
-					<div class="col-md-3 col-sm-6 col-xl-2 build-outer-box">
-						<div class="build-inner-box-success">
-							<p>BuildTypeId: sample build ID</p>
-							<p>BuildName: sample build name</p>
-						</div>
-					</div>
-					<div class="col-md-3 col-sm-6 col-xl-2 build-outer-box">
-						<div class="build-inner-box-success">
-							<p>BuildTypeId: sample build ID</p>
-							<p>BuildName: sample build name</p>
-						</div>
-					</div>					
-					<!-- End of Style Samples -->
 
 				</div>
 		    </div>
@@ -117,47 +78,8 @@
 							</div>
 						</div>
 					</div>
-
-					<!-- Style Samples: -->
-					<div class="col-md-3 col-sm-6 col-xl-2 project-outer-box">
-						<div class="project-inner-box-failure">
-							<p>Project id: sample project ID</p>
-							<p>Project name: sample project name</p>
-						</div>
-					</div>
-					<div class="col-md-3 col-sm-6 col-xl-2 project-outer-box">
-						<div class="project-inner-box-pending">
-							<p>Project id: sample project ID</p>
-							<p>Project name: sample project name</p>
-						</div>
-					</div>
-					<div class="col-md-3 col-sm-6 col-xl-2 project-outer-box">
-						<div class="project-inner-box-success">
-							<p>Project id: sample project ID</p>
-							<p>Project name: sample project name</p>
-						</div>
-					</div>
-					<div class="col-md-3 col-sm-6 col-xl-2 project-outer-box">
-						<div class="project-inner-box-success">
-							<p>Project id: sample project ID</p>
-							<p>Project name: sample project name</p>
-						</div>
-					</div>
-					<div class="col-md-3 col-sm-6 col-xl-2 project-outer-box">
-						<div class="project-inner-box-success">
-							<p>Project id: sample project ID</p>
-							<p>Project name: sample project name</p>
-						</div>
-					</div>
-					<div class="col-md-3 col-sm-6 col-xl-2 project-outer-box">
-						<div class="project-inner-box-success">
-							<p>Project id: sample project ID</p>
-							<p>Project name: sample project name</p>
-						</div>
-					</div>
-					<!-- End of Style Samples -->
-
 				</div>
+
 		    </div>
 		</div>
 		<!-- End of Tab Content -->

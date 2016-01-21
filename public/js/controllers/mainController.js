@@ -19,16 +19,18 @@ module.controller('mainController', ['$scope', 'teamcityService', function($scop
 
 	var getLastCompletedBuilds = function() {
 		for(var i = 0; i < $scope.allBuildTypes.length; i++) {
-			var build = teamcityService.getLastCompletedBuildFor($scope.allBuildTypes[i].id);
-			console.log("LAST COMPLETED BUILD FOR BUILD TYPE : " + build);
-			$scope.allLastCompletedBuilds.push(build);
+			var build = teamcityService.getLastCompletedBuildFor($scope.allBuildTypes[i].id)
+			.then(function(build) {
+				console.log("LAST COMPLETED BUILD FOR BUILD TYPE : " + JSON.stringify(build));
+				$scope.allLastCompletedBuilds.push(build);
+			});
 		};
+
 	};
 
 	$scope.allBuildTypes = teamcityService.getAllBuildTypes()
 		.then(function(buildTypes) {$scope.allBuildTypes = buildTypes; $scope.filteredBuildTypes = buildTypes})
 		.then(getLastCompletedBuilds);
-
 
 	$scope.filterProjectsBy = function(filterTerm) {
 		var regex = new RegExp(filterTerm,"ig");
