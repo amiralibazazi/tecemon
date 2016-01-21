@@ -28,8 +28,8 @@
 </head>
 
 <body ng-controller="mainController" ng-cloak>
-
 	<div class="main-view container">
+
 		<!-- Tab List -->
 		<div class="col-md-2">
 			<img src="./resources/Crowdmix_C_Icon_Mono_RGB_White.png" class="crowdmix-logo">
@@ -50,15 +50,31 @@
 				</div>
 
 				<div class="builds-container container">
-					<div ng-repeat="build in filteredLastCompletedBuilds track by $index">
+					<div ng-repeat="build in failedBuilds track by $index">
 						<div class="col-md-3 col-sm-6 col-xl-2 build-outer-box">
-							<div class="build-inner-box-success">
-								<p>BuildId: {{ build.id }}</p>
-								<p>BuildTypeId: {{ build.buildTypeId }}</p>
+							<div ng-model="buildBox" class="build-failure build-inner-box">
+								<li>BuildId: {{ build.buildTypeId }}</li>
 							</div>
 						</div>
 					</div>
-
+				</div>
+				<div class="builds-container container">
+					<div ng-repeat="build in pendingBuilds track by $index">
+						<div class="col-md-3 col-sm-6 col-xl-2 build-outer-box">
+							<div ng-model="buildBox" class="build-pending build-inner-box">
+								<li>BuildId: {{ build.buildTypeId }}</li>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="builds-container container">
+					<div ng-repeat="build in successfulBuilds track by $index">
+						<div class="col-md-3 col-sm-6 col-xl-2 build-outer-box">
+							<div ng-model="buildBox" class="build-success build-inner-box">
+								<li>BuildId: {{ build.buildTypeId }}</li>
+							</div>
+						</div>
+					</div>
 				</div>
 		    </div>
 

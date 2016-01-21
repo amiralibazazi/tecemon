@@ -55,25 +55,33 @@ body {
 	padding: 3pt
 }
 
-.build-inner-box-failure {
+.build-failure {
 	background-color: #BF4949;
 	color: black;
 	border-radius: 3pt;
 	padding: 3pt
 }
 
-.build-inner-box-success {
+.build-success {
 	background-color: #78D699;
 	color: black;
 	border-radius: 3pt;
 	padding: 3pt
 }
 
-.build-inner-box-pending {
+.build-pending {
 	background-color: #838587;
 	color: black;
 	border-radius: 3pt;
 	padding: 3pt
+}
+
+.build-inner-box {
+	color: black;
+	border-radius: 3pt;
+	padding: 3pt;
+	min-height: 60pt;
+	overflow: hidden;
 }
 
 .project-outer-box {
