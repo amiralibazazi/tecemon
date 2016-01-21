@@ -10,7 +10,7 @@ teamcityService.service('teamcityService', ['$http', '$q', function($http, $q) {
 		headers: {
 			"Content-Type":"application/json;charset=utf-8",
 			"Accept":"application/json",
-			"Authorization":"CHANGEME""
+			"Authorization":"CHANGEME"
 		}
 	}
 
@@ -61,7 +61,6 @@ teamcityService.service('teamcityService', ['$http', '$q', function($http, $q) {
 					.then(
 						function(response) {
 							if (typeof response.data.build != 'undefined') {
-								console.log("LAST BUILD FOR <" + buildTypeId + "> WAS " + JSON.stringify(response.data.build[0]));
 								return response.data.build[0];
 							}
 						},

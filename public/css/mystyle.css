@@ -1,47 +1,102 @@
-.sidebar-view {
 
+body {
+	background-color: #2F3030;
+}
+
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover {
+	color: #F0F0F0;
+	background-color: #2F3030;
+	border-color: #5C6166 #5C6166 transparent;
+}
+
+.nav-tabs {
+	border-bottom: 1px solid #5C6166;
+}
+
+.crowdmix-logo {
+	max-height: 80pt !important;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .main-view {
-
+	padding-top: 20pt;
 }
 
-.builds-options {
-
+.text-box {
+	border-radius: 5px;
+	border: none;
+	background-color: #F0F0F0;
+	height: 20pt;
+	padding-left: 5pt;
+	min-width: 200pt;
 }
 
-.builds-container {
+.filter-button {
+  	border: 0 none;
+  	border-radius: 6px;
+  	height: 20pt;
+  	background-color: #BABABA;
+}
 
+.options {
+	padding: 20pt 0pt;
 }
 
 .build-outer-box {
-	padding: 10px;
+	padding: 3pt;
 }
 
-.build-inner-box {
-	height: 50px;
-	border: solid dimgrey 2px;
+.build-inner-box-success {
+	background-color: #78D699;
+	color: black;
+	border-radius: 3pt;
+	padding: 3pt
 }
 
-.projects-options {
-	padding: 10px 10px 10px 20px;
+.build-inner-box-failure {
+	background-color: #BF4949;
+	color: black;
+	border-radius: 3pt;
+	padding: 3pt
 }
 
-.projects-container {
-	padding: 10px
+.build-inner-box-success {
+	background-color: #78D699;
+	color: black;
+	border-radius: 3pt;
+	padding: 3pt
+}
+
+.build-inner-box-pending {
+	background-color: #838587;
+	color: black;
+	border-radius: 3pt;
+	padding: 3pt
 }
 
 .project-outer-box {
-	background-color: white;
-	padding: 10px;
-	height: 150px;
+	padding: 3pt;
 }
 
-.project-inner-box {
-	height: 130px;
-	border: solid dimgrey 2px;
-	background-color: #D3FFD3;
-	border-color: black;
+.project-inner-box-failure {
+	background-color: #BF4949;
 	color: black;
+	border-radius: 3pt;
+	padding: 3pt
 }
-/*#D3FFD3*/
+
+.project-inner-box-pending {
+	background-color: #838587;
+	color: black;
+	border-radius: 3pt;
+	padding: 3pt
+}
+
+.project-inner-box-success {
+	background-color: #78D699;
+	color: black;
+	border-radius: 3pt;
+	padding: 3pt
+}
