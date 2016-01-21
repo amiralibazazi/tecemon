@@ -6,7 +6,7 @@ module.controller('mainController', ['$scope', 'teamcityService', function($scop
 	$scope.allBuilds = [];
 	$scope.allBuildTypes = [];
 	$scope.allLastCompletedBuilds = [];
-	$scope.filteredBuildTypes = [];
+	$scope.filteredLastCompletedBuilds = [];
 	$scope.projectFilter = "";
 	$scope.buildTypeFilter = "";
 
@@ -29,7 +29,7 @@ module.controller('mainController', ['$scope', 'teamcityService', function($scop
 	};
 
 	$scope.allBuildTypes = teamcityService.getAllBuildTypes()
-		.then(function(buildTypes) {$scope.allBuildTypes = buildTypes; $scope.filteredBuildTypes = buildTypes})
+		.then(function(buildTypes) {$scope.allBuildTypes = buildTypes; $scope.filteredLastCompletedBuilds = buildTypes})
 		.then(getLastCompletedBuilds);
 
 	$scope.filterProjectsBy = function(filterTerm) {
@@ -41,7 +41,7 @@ module.controller('mainController', ['$scope', 'teamcityService', function($scop
 
 	$scope.filterBuildTypesBy = function(filterTerm) {
 		var regex = new RegExp(filterTerm,"ig");
-		$scope.filteredBuildTypes = $scope.	allBuildTypes.filter(function(buildType) {
+		$scope.filteredLastCompletedBuilds = $scope.	allBuildTypes.filter(function(buildType) {
 			return regex.test(JSON.stringify(buildType));
 		});
 	}
