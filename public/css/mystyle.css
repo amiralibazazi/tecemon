@@ -90,3 +90,11 @@ body {
 	height: 60pt;
 	overflow: hidden;
 }
+
+.saved-filter-box {
+	height: 30pt;
+	background-color: #5A98D6; 
+	text-align: center; 
+	margin: 5pt; 
+	max-width: 100pt
+}

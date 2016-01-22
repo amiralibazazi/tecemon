@@ -7,7 +7,7 @@ module.controller('mainController', ['$scope', 'teamcityService', function($scop
 	$scope.allBuildTypes = [];
 	$scope.allLastCompletedBuilds = [];
 	$scope.filteredLastCompletedBuilds = [];
-	$scope.savedSearches = [];
+	$scope.savedFilters = [];
 	$scope.buildTypeFilter = "";
 
 	$scope.allBuilds = teamcityService.getAllBuilds()
@@ -27,13 +27,15 @@ module.controller('mainController', ['$scope', 'teamcityService', function($scop
 		});
 	};
 
-	$scope.saveSearchTerm = function(searchTerm) {
-		$scope.savedSearches.push(searchTerm)
+	$scope.saveFilterTerm = function(filterTerm) {
+		console.log("saving filter term");
+		$scope.savedFilters.push(filterTerm)
+		console.log("SAVED FILTERS" + JSON.stringify($scope.savedFilters));
 	}
 
-	$scope.removeSearchTerm = function(searchTerm) {
-		for (var i = $scope.savedSearches.length - 1; i >= 0; i--) {
-    		if ($scope.savedSearches[i] === searchTerm) {array.splice(i, 1);}
+	$scope.removeFilterTerm = function(filterTerm) {
+		for (var i = $scope.savedFilters.length - 1; i >= 0; i--) {
+    		if ($scope.savedFilters[i] === filterTerm) {array.splice(i, 1);}
 		}
 	}
 

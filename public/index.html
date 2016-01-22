@@ -30,43 +30,37 @@
 	<body ng-controller="mainController" ng-cloak>
 		<div class="main-view container">
 	
-			<!-- Tab List -->
+			<!-- Tab List -->	
 			<div class="col-md-2">
 				<img src="./resources/Crowdmix_C_Icon_Mono_RGB_White.png" class="crowdmix-logo">
 			</div>
-			<ul class="nav nav-tabs col-md-10">
-				<li ng-click="filterBuildTypesBy('')" class="active"><a data-toggle="tab" href="#builds">Builds</a></li>
-				<div ng-repeat="savedSearch in savedSearches track by $index">
-					<li class="active" ng-click="filterBuildTypesBy(savedSearch)"><a data-toggle="tab">{{ savedSearch }}</a></li>
+			<ul class="col-md-10">
+				<div ng-click="filterBuildTypesBy('')" class="saved-filter-box col-md-1">All Builds</div>
+				<div ng-repeat="savedFilter in savedFilters track by $index">
+					<div class="saved-filter-box col-md-1" ng-click="filterBuildTypesBy(savedFilter)">{{ savedFilter }}</div>
 				</div>
 			</ul>
 			<!-- End of Tab list -->
+
+			<div class="col-md-2"></div>
+			<div class="options col-md-10">
+				<input placeholder="Enter regex here" ng-model="buildTypeFilter" class="text-box">
+				<button ng-click='filterBuildTypesBy(buildTypeFilter)' class="filter-button"> Filter Builds </button>
+				<button ng-click='saveFilterTerm(buildTypeFilter)' class="save-button">Save</button>
+			</div>
 	
-			<!-- Tab Content -->
-			<div class="tab-content">
-			    <div id="builds" class="tab-pane fade in active">
-			      	<div class="col-md-2"></div>
-			      	<div class="options col-md-10">
-						<input placeholder="Enter regex here" ng-model="buildTypeFilter" class="text-box">
-						<button ng-click='filterBuildTypesBy(buildTypeFilter)' class="filter-button"> Filter Builds </button>
-						<button ng-click='saveSearchTerm(buildTypeFilter)' class="save-button">Save</button>
-					</div>
-	
-					<div class="builds-container container">
-						<div ng-repeat="build in filteredLastCompletedBuilds | statusSorter:'status' track by $index">
-							<div class="col-md-3 col-sm-6 col-xl-2 build-outer-box">
-								<div ng-model="buildBox" ng-class="{'build-success' : build.status == 'SUCCESS', 
-																	'build-failure' : build.status == 'FAILURE',
-								 									'build-pending' : build.status == 'PENDING' }" class="build-inner-box">
-									<div>{{ build.projectName }}</div>
-									<div>{{ build.name }}</div>
-								</div>
-							</div>
+			<div class="builds-container container">
+				<div ng-repeat="build in filteredLastCompletedBuilds | statusSorter:'status' track by $index">
+					<div class="col-md-3 col-sm-6 col-xl-2 build-outer-box">
+						<div ng-model="buildBox" ng-class="{'build-success' : build.status == 'SUCCESS', 
+															'build-failure' : build.status == 'FAILURE',
+						 									'build-pending' : build.status == 'PENDING' }" class="build-inner-box">
+							<div>{{ build.projectName }}</div>
+							<div>{{ build.name }}</div>
 						</div>
 					</div>
-			    </div>
+				</div>
 			</div>
-			<!-- End of Tab Content -->
 		</div>
 	</body>
 </html>
