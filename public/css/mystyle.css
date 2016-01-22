@@ -40,6 +40,13 @@ body {
   	background-color: #BABABA;
 }
 
+.save-button {
+	border: 0 none;
+  	border-radius: 6px;
+  	height: 20pt;
+  	background-color: #BABABA;
+}
+
 .options {
 	padding: 20pt 0pt;
 }

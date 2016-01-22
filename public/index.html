@@ -35,7 +35,10 @@
 				<img src="./resources/Crowdmix_C_Icon_Mono_RGB_White.png" class="crowdmix-logo">
 			</div>
 			<ul class="nav nav-tabs col-md-10">
-				<li  class="active"><a data-toggle="tab" href="#builds">Builds</a></li>
+				<li ng-click="filterBuildTypesBy('')" class="active"><a data-toggle="tab" href="#builds">Builds</a></li>
+				<div ng-repeat="savedSearch in savedSearches track by $index">
+					<li class="active" ng-click="filterBuildTypesBy(savedSearch)"><a data-toggle="tab">{{ savedSearch }}</a></li>
+				</div>
 			</ul>
 			<!-- End of Tab list -->
 	
@@ -46,6 +49,7 @@
 			      	<div class="options col-md-10">
 						<input placeholder="Enter regex here" ng-model="buildTypeFilter" class="text-box">
 						<button ng-click='filterBuildTypesBy(buildTypeFilter)' class="filter-button"> Filter Builds </button>
+						<button ng-click='saveSearchTerm(buildTypeFilter)' class="save-button">Save</button>
 					</div>
 	
 					<div class="builds-container container">
@@ -54,8 +58,8 @@
 								<div ng-model="buildBox" ng-class="{'build-success' : build.status == 'SUCCESS', 
 																	'build-failure' : build.status == 'FAILURE',
 								 									'build-pending' : build.status == 'PENDING' }" class="build-inner-box">
-									<div>{{ build.name }}</div>
 									<div>{{ build.projectName }}</div>
+									<div>{{ build.name }}</div>
 								</div>
 							</div>
 						</div>

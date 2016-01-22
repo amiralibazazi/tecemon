@@ -7,6 +7,7 @@ module.controller('mainController', ['$scope', 'teamcityService', function($scop
 	$scope.allBuildTypes = [];
 	$scope.allLastCompletedBuilds = [];
 	$scope.filteredLastCompletedBuilds = [];
+	$scope.savedSearches = [];
 	$scope.buildTypeFilter = "";
 
 	$scope.allBuilds = teamcityService.getAllBuilds()
@@ -25,6 +26,16 @@ module.controller('mainController', ['$scope', 'teamcityService', function($scop
 			});
 		});
 	};
+
+	$scope.saveSearchTerm = function(searchTerm) {
+		$scope.savedSearches.push(searchTerm)
+	}
+
+	$scope.removeSearchTerm = function(searchTerm) {
+		for (var i = $scope.savedSearches.length - 1; i >= 0; i--) {
+    		if ($scope.savedSearches[i] === searchTerm) {array.splice(i, 1);}
+		}
+	}
 
 	$scope.allBuildTypes = teamcityService.getAllBuildTypes()
 		.then(function(buildTypes) {$scope.allBuildTypes = buildTypes; $scope.filteredLastCompletedBuilds = buildTypes})
