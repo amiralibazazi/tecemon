@@ -28,9 +28,7 @@ module.controller('mainController', ['$scope', 'teamcityService', function($scop
 	};
 
 	$scope.saveFilterTerm = function(filterTerm) {
-		console.log("saving filter term");
 		$scope.savedFilters.push(filterTerm)
-		console.log("SAVED FILTERS" + JSON.stringify($scope.savedFilters));
 	}
 
 	$scope.removeFilterTerm = function(filterTerm) {
