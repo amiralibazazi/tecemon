@@ -21,6 +21,7 @@ module.controller('mainController', ['$scope', 'teamcityService', function($scop
 					if(builds.build[0].status == 'FAILURE') buildType.status = 'FAILURE'
 				} else buildType.status = 'PENDING' 
 				$scope.allLastCompletedBuilds.push(buildType);
+				$scope.filteredLastCompletedBuilds.push(buildType);
 			});
 		});
 	};
