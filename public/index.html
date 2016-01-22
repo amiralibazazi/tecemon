@@ -51,10 +51,9 @@
 					<div class="builds-container container">
 						<div ng-repeat="build in allLastCompletedBuilds | statusSorter:'status' track by $index">
 							<div class="col-md-3 col-sm-6 col-xl-2 build-outer-box">
-								<div ng-model="buildBox" class="build-inner-box">
+								<div ng-model="buildBox" ng-class="{'build-success' : build.status == 'SUCCESS', 'build-failure' : build.status == 'FAILURE', 'build-pending' : build.status == 'PENDING', }" class="build-inner-box">
 									<div>{{ build.name }}</div>
 									<div>{{ build.projectName }}</div>
-									<div>{{ build.status }}</div>
 								</div>
 							</div>
 						</div>
