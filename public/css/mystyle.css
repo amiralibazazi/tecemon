@@ -40,6 +40,13 @@ body {
   	background-color: #BABABA;
 }
 
+.save-button {
+	border: 0 none;
+  	border-radius: 6px;
+  	height: 20pt;
+  	background-color: #BABABA;
+}
+
 .options {
 	padding: 20pt 0pt;
 }
@@ -82,4 +89,12 @@ body {
 	padding: 3pt;
 	height: 60pt;
 	overflow: hidden;
+}
+
+.saved-filter-box {
+	height: 30pt;
+	background-color: #5A98D6; 
+	text-align: center; 
+	margin: 5pt; 
+	max-width: 100pt
 }

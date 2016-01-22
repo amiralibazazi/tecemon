@@ -7,6 +7,7 @@ module.controller('mainController', ['$scope', 'teamcityService', function($scop
 	$scope.allBuildTypes = [];
 	$scope.allLastCompletedBuilds = [];
 	$scope.filteredLastCompletedBuilds = [];
+	$scope.savedFilters = [];
 	$scope.buildTypeFilter = "";
 
 	$scope.allBuilds = teamcityService.getAllBuilds()
@@ -21,9 +22,20 @@ module.controller('mainController', ['$scope', 'teamcityService', function($scop
 					if(builds.build[0].status == 'FAILURE') buildType.status = 'FAILURE'
 				} else buildType.status = 'PENDING' 
 				$scope.allLastCompletedBuilds.push(buildType);
+				$scope.filteredLastCompletedBuilds.push(buildType);
 			});
 		});
 	};
+
+	$scope.saveFilterTerm = function(filterTerm) {
+		$scope.savedFilters.push(filterTerm)
+	}
+
+	$scope.removeFilterTerm = function(filterTerm) {
+		for (var i = $scope.savedFilters.length - 1; i >= 0; i--) {
+    		if ($scope.savedFilters[i] === filterTerm) {array.splice(i, 1);}
+		}
+	}
 
 	$scope.allBuildTypes = teamcityService.getAllBuildTypes()
 		.then(function(buildTypes) {$scope.allBuildTypes = buildTypes; $scope.filteredLastCompletedBuilds = buildTypes})
