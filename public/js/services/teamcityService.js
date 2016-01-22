@@ -14,20 +14,6 @@ teamcityService.service('teamcityService', ['$http', '$q', function($http, $q) {
 		}
 	}
 
-	teamcityService.getAllProjects = function() {
-		return $http.get(allProjectsUrl, config)
-					.then(
-						function(response) {
-							console.log("Successfully received projects from TeamCity");
-							return response.data.project;
-						},
-						function(response) {
-							console.log("Failed to retrieve projects from TeamCity");
-							$q.reject();
-						}
-					);
-	};
-
 	teamcityService.getAllBuilds = function() {
 		return $http.get(allBuildsUrl, config)
 					.then(
