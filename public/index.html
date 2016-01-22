@@ -1,89 +1,66 @@
 <!doctype html>
 <html ng-app="tecemon">
-
-<head>
-	<!-- META -->
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-
-	<title>Team City Monitor</title>
-
-	<!-- Web dependencies -->
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"><!-- load bootstrap -->
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
-	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-
-	<!-- CSS -->
-	<link rel="stylesheet" type="text/css" href="./css/mystyle.css">
-
-	<!-- Javascript frameworks -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-
-	<!-- File dependencies -->
-	<script src="./js/core.js"></script> <!-- load our main application -->
-	<script src="./js/controllers/mainController.js"></script> <!-- load up our controller -->
-	<script src="./js/services/teamcityService.js"></script>
-</head>
-
-<body ng-controller="mainController" ng-cloak>
-
-	<div class="main-view container">
-		<!-- Tab List -->
-		<div class="col-md-2">
-			<img src="./resources/Crowdmix_C_Icon_Mono_RGB_White.png" class="crowdmix-logo">
-		</div>
-		<ul class="nav nav-tabs col-md-10">
-			<li  class="active"><a data-toggle="tab" href="#builds">Builds</a></li>
-			<li><a data-toggle="tab" href="#projects">Projects</a></li>
-		</ul>
-		<!-- End of Tab list -->
-
-		<!-- Tab Content -->
-		<div class="tab-content">
-		    <div id="builds" class="tab-pane fade in active">
-		      	<div class="col-md-2"></div>
-		      	<div class="options col-md-10">
-					<input placeholder="Enter regex here" ng-model="buildTypeFilter" class="text-box">
-					<button ng-click='filterBuildTypesBy(buildTypeFilter)' class="filter-button"> Filter Builds </button>
-				</div>
-
-				<div class="builds-container container">
-					<div ng-repeat="build in filteredLastCompletedBuilds track by $index">
-						<div class="col-md-3 col-sm-6 col-xl-2 build-outer-box">
-							<div class="build-inner-box-success">
-								<p>BuildId: {{ build.id }}</p>
-								<p>BuildTypeId: {{ build.buildTypeId }}</p>
+	<head>
+		<!-- META -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+		<title>Team City Monitor</title>
+	
+		<!-- Web dependencies -->
+		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"><!-- load bootstrap -->
+		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	
+		<!-- CSS -->
+		<link rel="stylesheet" type="text/css" href="./css/mystyle.css">
+	
+		<!-- Javascript frameworks -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	
+		<!-- File dependencies -->
+		<script src="./js/core.js"></script> <!-- load our main application -->
+		<script src="./js/filters.js"></script>
+		<script src="./js/controllers/mainController.js"></script> <!-- load up our controller -->
+		<script src="./js/services/teamcityService.js"></script>
+	</head>
+	
+	<body ng-controller="mainController" ng-cloak>
+		<div class="main-view container">
+	
+			<!-- Tab List -->
+			<div class="col-md-2">
+				<img src="./resources/Crowdmix_C_Icon_Mono_RGB_White.png" class="crowdmix-logo">
+			</div>
+			<ul class="nav nav-tabs col-md-10">
+				<li  class="active"><a data-toggle="tab" href="#builds">Builds</a></li>
+			</ul>
+			<!-- End of Tab list -->
+	
+			<!-- Tab Content -->
+			<div class="tab-content">
+			    <div id="builds" class="tab-pane fade in active">
+			      	<div class="col-md-2"></div>
+			      	<div class="options col-md-10">
+						<input placeholder="Enter regex here" ng-model="buildTypeFilter" class="text-box">
+						<button ng-click='filterBuildTypesBy(buildTypeFilter)' class="filter-button"> Filter Builds </button>
+					</div>
+	
+					<div class="builds-container container">
+						<div ng-repeat="build in allLastCompletedBuilds | statusSorter:'status' track by $index">
+							<div class="col-md-3 col-sm-6 col-xl-2 build-outer-box">
+								<div ng-model="buildBox" ng-class="{'build-success' : build.status == 'SUCCESS', 'build-failure' : build.status == 'FAILURE', 'build-pending' : build.status == 'PENDING', }" class="build-inner-box">
+									<div>{{ build.name }}</div>
+									<div>{{ build.projectName }}</div>
+								</div>
 							</div>
 						</div>
 					</div>
-
-				</div>
-		    </div>
-
-		    <div id="projects" class="tab-pane fade ">
-		    	<div class="col-md-2"></div>
-		      	<div class="col-md-10 options">
-					<input placeholder="Enter regex here" ng-model="projectFilter" class="text-box">
-					<button ng-click='filterProjectsBy(projectFilter)' class="filter-button"> Filter Projects </button>
-				</div>
-
-				<div class="projects-container container">
-					<div ng-repeat="project in filterProjectsBy">
-						<div class="col-md-3 col-sm-6 col-xl-2 project-outer-box">
-							<div class="project-inner-box-success">
-								<p>Project id: {{ project.id }}</p>
-								<p>Project name: {{ project.name }}</p>
-							</div>
-						</div>
-					</div>
-				</div>
-
-		    </div>
+			    </div>
+			</div>
+			<!-- End of Tab Content -->
 		</div>
-		<!-- End of Tab Content -->
-	</div>
-</body>
-
+	</body>
 </html>

@@ -55,48 +55,31 @@ body {
 	padding: 3pt
 }
 
-.build-inner-box-failure {
+.build-failure {
 	background-color: #BF4949;
 	color: black;
 	border-radius: 3pt;
 	padding: 3pt
 }
 
-.build-inner-box-success {
+.build-success {
 	background-color: #78D699;
 	color: black;
 	border-radius: 3pt;
 	padding: 3pt
 }
 
-.build-inner-box-pending {
+.build-pending {
 	background-color: #838587;
 	color: black;
 	border-radius: 3pt;
 	padding: 3pt
 }
 
-.project-outer-box {
+.build-inner-box {
+	color: black;
+	border-radius: 3pt;
 	padding: 3pt;
-}
-
-.project-inner-box-failure {
-	background-color: #BF4949;
-	color: black;
-	border-radius: 3pt;
-	padding: 3pt
-}
-
-.project-inner-box-pending {
-	background-color: #838587;
-	color: black;
-	border-radius: 3pt;
-	padding: 3pt
-}
-
-.project-inner-box-success {
-	background-color: #78D699;
-	color: black;
-	border-radius: 3pt;
-	padding: 3pt
+	height: 60pt;
+	overflow: hidden;
 }
