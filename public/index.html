@@ -36,7 +36,6 @@
 		</div>
 		<ul class="nav nav-tabs col-md-10">
 			<li  class="active"><a data-toggle="tab" href="#builds">Builds</a></li>
-			<li><a data-toggle="tab" href="#projects">Projects</a></li>
 		</ul>
 		<!-- End of Tab list -->
 
@@ -53,7 +52,9 @@
 					<div ng-repeat="build in failedBuilds track by $index">
 						<div class="col-md-3 col-sm-6 col-xl-2 build-outer-box">
 							<div ng-model="buildBox" class="build-failure build-inner-box">
-								<li>BuildId: {{ build.buildTypeId }}</li>
+								<p>{{ build.name }}</p>
+								<p>{{ build.projectName }}</p>
+								<p>{{ build.id }}</p>
 							</div>
 						</div>
 					</div>
@@ -62,7 +63,9 @@
 					<div ng-repeat="build in pendingBuilds track by $index">
 						<div class="col-md-3 col-sm-6 col-xl-2 build-outer-box">
 							<div ng-model="buildBox" class="build-pending build-inner-box">
-								<li>BuildId: {{ build.buildTypeId }}</li>
+								<p>{{ build.name }}</p>
+								<p>{{ build.projectName }}</p>
+								<p>{{ build.id }}</p>
 							</div>
 						</div>
 					</div>
@@ -71,32 +74,15 @@
 					<div ng-repeat="build in successfulBuilds track by $index">
 						<div class="col-md-3 col-sm-6 col-xl-2 build-outer-box">
 							<div ng-model="buildBox" class="build-success build-inner-box">
-								<li>BuildId: {{ build.buildTypeId }}</li>
+								<p>{{ build.name }}</p>
+								<p>{{ build.projectName }}</p>
+								<p>{{ build.id }}</p>
 							</div>
 						</div>
 					</div>
 				</div>
 		    </div>
 
-		    <div id="projects" class="tab-pane fade ">
-		    	<div class="col-md-2"></div>
-		      	<div class="col-md-10 options">
-					<input placeholder="Enter regex here" ng-model="projectFilter" class="text-box">
-					<button ng-click='filterProjectsBy(projectFilter)' class="filter-button"> Filter Projects </button>
-				</div>
-
-				<div class="projects-container container">
-					<div ng-repeat="project in filterProjectsBy">
-						<div class="col-md-3 col-sm-6 col-xl-2 project-outer-box">
-							<div class="project-inner-box-success">
-								<p>Project id: {{ project.id }}</p>
-								<p>Project name: {{ project.name }}</p>
-							</div>
-						</div>
-					</div>
-				</div>
-
-		    </div>
 		</div>
 		<!-- End of Tab Content -->
 	</div>

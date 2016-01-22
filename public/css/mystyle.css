@@ -80,31 +80,6 @@ body {
 	color: black;
 	border-radius: 3pt;
 	padding: 3pt;
-	min-height: 60pt;
+	height: 60pt;
 	overflow: hidden;
-}
-
-.project-outer-box {
-	padding: 3pt;
-}
-
-.project-inner-box-failure {
-	background-color: #BF4949;
-	color: black;
-	border-radius: 3pt;
-	padding: 3pt
-}
-
-.project-inner-box-pending {
-	background-color: #838587;
-	color: black;
-	border-radius: 3pt;
-	padding: 3pt
-}
-
-.project-inner-box-success {
-	background-color: #78D699;
-	color: black;
-	border-radius: 3pt;
-	padding: 3pt
 }

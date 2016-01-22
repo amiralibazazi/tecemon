@@ -56,13 +56,11 @@ teamcityService.service('teamcityService', ['$http', '$q', function($http, $q) {
 					);
 	}
 
-	teamcityService.getLastCompletedBuildFor = function(buildTypeId) {
+	teamcityService.getBuildsFor = function(buildTypeId) {
 		return $http.get("https://teamcity.dev.crwd.mx/app/rest/buildTypes/id:"+buildTypeId+"/builds/?locator=branch:(name:master)")
 					.then(
 						function(response) {
-							if (typeof response.data.build != 'undefined') {
-								return response.data.build[0];
-							}
+							return response.data;
 						},
 						function(response) {
 							console.log("Failed to retrieve last successful build for <" + buildTypeId + ">");

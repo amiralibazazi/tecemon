@@ -21,23 +21,25 @@ module.controller('mainController', ['$scope', 'teamcityService', function($scop
 		.then(function(builds) {$scope.allBuilds = builds;});
 
 	var getLastCompletedBuilds = function() {
-		for(var i = 0; i < $scope.allBuildTypes.length; i++) {
-			var build = teamcityService.getLastCompletedBuildFor($scope.allBuildTypes[i].id)
-			.then(function(build) {
-				if (build.status == "SUCCESS") {
-					console.log("SUCCESSFUL BUILD: " + JSON.stringify(build));
-					$scope.successfulBuilds.push(build);
+		angular.forEach($scope.allBuildTypes, function(buildType) {
+			teamcityService.getBuildsFor(buildType.id)
+			.then(function(builds) {
+				if (builds.count != 0) {
+					if(builds.build[0].status == 'SUCCESS') {
+						buildType.status = 'SUCCESS'
+						$scope.successfulBuilds.push(buildType);
+					}
+					if(builds.build[0].status == 'FAILURE') {
+						buildType.status = 'FAILURE'
+						$scope.failedBuilds.push(buildType);
+					}
 				} else {
-					if (build.status == "FAILURE") {
-						console.log("FAILED BUILD: " + JSON.stringify(build));
-						$scope.failedBuilds.push(build);
-					} else {
-						console.log("PENDING BUILD: " + JSON.stringify(build));
-						$scope.pendingBuilds.push(build);
-					};
-				};
+					buildType.status = 'PENDING'
+					console.log("STATUS OF PENDING BUILD: " + JSON.stringify(buildType))
+					$scope.pendingBuilds.push(buildType);
+				}
 			});
-		};
+		});
 	};
 
 	$scope.allBuildTypes = teamcityService.getAllBuildTypes()
