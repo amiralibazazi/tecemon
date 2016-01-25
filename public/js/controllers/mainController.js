@@ -4,15 +4,11 @@ module.controller('mainController', ['$scope', '$q', '$interval', 'teamcityServi
 							function($scope, $q, $interval, teamcityService) {
 	$scope.allProjects = [];
 	$scope.filteredProjects = [];
-	$scope.allBuilds = [];
 	$scope.allBuildTypes = [];
 	$scope.allLastCompletedBuilds = [];
 	$scope.filteredLastCompletedBuilds = [];
 	$scope.savedFilters = [];
 	$scope.buildTypeFilter = "";
-
-	$scope.allBuilds = teamcityService.getAllBuilds()
-		.then(function(builds) {$scope.allBuilds = builds;});
 
 	var getLastCompletedBuilds = function() {
 		var retrievedBuilds = [];
@@ -20,9 +16,14 @@ module.controller('mainController', ['$scope', '$q', '$interval', 'teamcityServi
 			teamcityService.getBuildsFor(buildType.id)
 			.then(function(builds) {
 				if (builds.count != 0) {
+					if (builds.build[0].state == 'running') {
+						console.log("We found a running build! " + JSON.stringify(builds.build[0]))
+						buildType.percentageComplete = builds.build[0].percentageComplete;
+					}
 					if(builds.build[0].status == 'SUCCESS') buildType.status = 'SUCCESS'
 					if(builds.build[0].status == 'FAILURE') buildType.status = 'FAILURE'
 				} else buildType.status = 'PENDING' 
+				if (builds.build) buildType.state = builds.build[0].state;
 				retrievedBuilds.push(buildType);
 			});
 		});
@@ -52,7 +53,6 @@ module.controller('mainController', ['$scope', '$q', '$interval', 'teamcityServi
 	}
 
 	var refreshView = function() {
-		console.log("View Refreshed. Here's a random number: " + Math.random())
 		getLastCompletedBuilds()
 		.then($scope.filterBuildTypesBy($scope.buildTypeFilter))
 		

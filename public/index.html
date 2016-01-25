@@ -35,7 +35,10 @@
 				<img src="./resources/Crowdmix_C_Icon_Mono_RGB_White.png" class="crowdmix-logo">
 			</div>
 			<ul class="col-md-10">
-				<div ng-click="filterBuildTypesBy('')" class="saved-filter-box col-md-1">All Builds</div>
+				<div ng-click="filterBuildTypesBy('')" class="saved-filter-box col-md-1">
+					<div style="text-align: center; background-color: red; font-size: 8pt; height: 10pt; width: 10pt; right: 0%;">X</div>
+					All Builds
+				</div>
 				<div ng-repeat="savedFilter in savedFilters track by $index">
 					<div class="saved-filter-box col-md-1" ng-click="filterBuildTypesBy(savedFilter)">{{ savedFilter }}</div>
 				</div>
