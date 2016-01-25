@@ -52,6 +52,7 @@ module.controller('mainController', ['$scope', '$q', '$interval', 'teamcityServi
 		.then(getLastCompletedBuilds)
 
 	var refreshView = function() {
+		console.log("Refreshing View");
 		getLastCompletedBuilds()
 		.then($scope.filterBuildTypesBy($scope.buildTypeFilter))
 	}
