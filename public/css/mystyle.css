@@ -22,6 +22,9 @@ body {
 
 .main-view {
 	padding-top: 20pt;
+	margin: 0 5% 0 5%;
+	left: 0;
+	right: 0;
 }
 
 .text-box {
@@ -48,10 +51,13 @@ body {
 }
 
 .options {
-	padding: 20pt 0pt;
+	padding: 10pt 0pt 20pt 0pt;
 }
 
 .build-outer-box {
+	white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 	padding: 3pt;
 }
 
@@ -92,22 +98,54 @@ body {
 }
 
 .saved-filter-box {
-	height: 30pt;
-	background-color: #5A98D6; 
-	text-align: center; 
-	margin: 5pt; 
-	max-width: 100pt
+	cursor: pointer;
+    height: 30pt;
+    background-color: #5A98D6; 
+    margin: 5pt; 
+    width: auto;
+    overflow: hidden;
+    position: relative;
+    border-radius: 5px 5px 0 0;
 }
 
 .progress-bar-background {
-	margin-top: 5pt;
-	height: 20px; 
-	width: 100%;
-	background-color: #2F3030;
+	overflow: hidden;
+	position: relative;
+    margin-top: 5pt;
+    height: 20px; 
+    width: 100%;
+    background-color: #2F3030;
+    border-radius: 5px;
+    padding: 2px;
 }
 
 .progress-bar {
-	margin-top: 5pt;
-	height: 20px; 
+	overflow: hidden;
+	position: absolute;
+    height: 16px; 
+    border-radius: 2px;
+    max-width: 98%;
+}
+
+.close-filter-button {
+    position: absolute;
+    right: 0;
+    text-align: center; 
+    font-size: 8pt; 
+    height: 10pt; 
+    width: 10pt; 
+    font-weight: bold;
+}
+
+.saved-filter-text {
+    text-align: center; 
+    margin-top: 8pt;
+}
+
+.green-color {
 	background-color: #78D699;
+}
+
+.red-color {
+	background-color: #BF4949;
 }

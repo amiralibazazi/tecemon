@@ -36,7 +36,7 @@ module.controller('mainController', ['$scope', '$q', '$interval', 'teamcityServi
 
 	$scope.removeFilterTerm = function(filterTerm) {
 		for (var i = $scope.savedFilters.length - 1; i >= 0; i--) {
-    		if ($scope.savedFilters[i] === filterTerm) {array.splice(i, 1);}
+    		if ($scope.savedFilters[i] === filterTerm) {$scope.savedFilters.splice(i, 1);}
 		}
 	}
 
