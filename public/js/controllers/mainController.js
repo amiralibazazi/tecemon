@@ -1,6 +1,7 @@
 var module = angular.module('tecemonController', ['teamcityservice', 'filters']);
 
-module.controller('mainController', ['$scope', 'teamcityService', function($scope, teamcityService) {
+module.controller('mainController', ['$scope', '$q', '$interval', 'teamcityService', 
+							function($scope, $q, $interval, teamcityService) {
 	$scope.allProjects = [];
 	$scope.filteredProjects = [];
 	$scope.allBuilds = [];
@@ -14,6 +15,7 @@ module.controller('mainController', ['$scope', 'teamcityService', function($scop
 		.then(function(builds) {$scope.allBuilds = builds;});
 
 	var getLastCompletedBuilds = function() {
+		var retrievedBuilds = [];
 		angular.forEach($scope.allBuildTypes, function(buildType) {
 			teamcityService.getBuildsFor(buildType.id)
 			.then(function(builds) {
@@ -21,14 +23,16 @@ module.controller('mainController', ['$scope', 'teamcityService', function($scop
 					if(builds.build[0].status == 'SUCCESS') buildType.status = 'SUCCESS'
 					if(builds.build[0].status == 'FAILURE') buildType.status = 'FAILURE'
 				} else buildType.status = 'PENDING' 
-				$scope.allLastCompletedBuilds.push(buildType);
-				$scope.filteredLastCompletedBuilds.push(buildType);
+				retrievedBuilds.push(buildType);
 			});
 		});
+		$scope.allLastCompletedBuilds = retrievedBuilds;
+		return $q.defer().promise;
 	};
 
 	$scope.saveFilterTerm = function(filterTerm) {
-		$scope.savedFilters.push(filterTerm)
+		$scope.savedFilters.push(filterTerm);
+		$scope.filterBuildTypesBy(filterTerm);
 	}
 
 	$scope.removeFilterTerm = function(filterTerm) {
@@ -47,4 +51,14 @@ module.controller('mainController', ['$scope', 'teamcityService', function($scop
 			return regex.test(JSON.stringify(buildType));
 		});
 	}
+
+	var refreshView = function() {
+		console.log("View refreshed");
+		console.log("Here's a random number: " + Math.random())
+		getLastCompletedBuilds()
+		.then($scope.filterBuildTypesBy($scope.buildTypeFilter))
+		
+	}
+
+	$interval(refreshView, 10000);
 }]);
