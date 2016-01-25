@@ -2,7 +2,6 @@ var module = angular.module('tecemonController', ['teamcityservice', 'filters'])
 
 module.controller('mainController', ['$scope', '$q', '$interval', 'teamcityService', 
 							function($scope, $q, $interval, teamcityService) {
-	$scope.allProjects = [];
 	$scope.filteredProjects = [];
 	$scope.allBuildTypes = [];
 	$scope.allLastCompletedBuilds = [];
