@@ -60,6 +60,9 @@
 						 									'build-pending' : build.status == 'PENDING' }" class="build-inner-box">
 							<div>{{ build.projectName }}</div>
 							<div>{{ build.name }}</div>
+							<div ng-class="{'progress-bar-background' : build.state == 'running'}">
+								<div class="progress-bar" style="width: {{build.percentageComplete}}%"></div>
+							</div>
 						</div>
 					</div>
 				</div>

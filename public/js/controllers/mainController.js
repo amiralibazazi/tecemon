@@ -17,7 +17,6 @@ module.controller('mainController', ['$scope', '$q', '$interval', 'teamcityServi
 			.then(function(builds) {
 				if (builds.count != 0) {
 					if (builds.build[0].state == 'running') {
-						console.log("We found a running build! " + JSON.stringify(builds.build[0]))
 						buildType.percentageComplete = builds.build[0].percentageComplete;
 					}
 					if(builds.build[0].status == 'SUCCESS') buildType.status = 'SUCCESS'
@@ -55,7 +54,6 @@ module.controller('mainController', ['$scope', '$q', '$interval', 'teamcityServi
 	var refreshView = function() {
 		getLastCompletedBuilds()
 		.then($scope.filterBuildTypesBy($scope.buildTypeFilter))
-		
 	}
 
 	$interval(refreshView, 10000);
