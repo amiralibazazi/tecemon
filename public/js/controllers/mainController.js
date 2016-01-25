@@ -30,6 +30,13 @@ module.controller('mainController', ['$scope', '$q', '$interval', 'teamcityServi
 		return $q.defer().promise;
 	};
 
+	$scope.filterBuildTypesBy = function(filterTerm) {
+		var regex = new RegExp(filterTerm,"ig");
+		$scope.filteredLastCompletedBuilds = $scope.allBuildTypes.filter(function(buildType) {
+			return regex.test(JSON.stringify(buildType));
+		});
+	}
+
 	$scope.saveFilterTerm = function(filterTerm) {
 		$scope.savedFilters.push(filterTerm);
 	}
@@ -43,13 +50,6 @@ module.controller('mainController', ['$scope', '$q', '$interval', 'teamcityServi
 	$scope.allBuildTypes = teamcityService.getAllBuildTypes()
 		.then(function(buildTypes) {$scope.allBuildTypes = buildTypes; $scope.filteredLastCompletedBuilds = buildTypes})
 		.then(getLastCompletedBuilds)
-
-	$scope.filterBuildTypesBy = function(filterTerm) {
-		var regex = new RegExp(filterTerm,"ig");
-		$scope.filteredLastCompletedBuilds = $scope.allBuildTypes.filter(function(buildType) {
-			return regex.test(JSON.stringify(buildType));
-		});
-	}
 
 	var refreshView = function() {
 		getLastCompletedBuilds()
