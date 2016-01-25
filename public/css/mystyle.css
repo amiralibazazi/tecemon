@@ -98,3 +98,16 @@ body {
 	margin: 5pt; 
 	max-width: 100pt
 }
+
+.progress-bar-background {
+	margin-top: 5pt;
+	height: 20px; 
+	width: 100%;
+	background-color: #2F3030;
+}
+
+.progress-bar {
+	margin-top: 5pt;
+	height: 20px; 
+	background-color: #78D699;
+}

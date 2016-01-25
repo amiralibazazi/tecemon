@@ -35,7 +35,10 @@
 				<img src="./resources/Crowdmix_C_Icon_Mono_RGB_White.png" class="crowdmix-logo">
 			</div>
 			<ul class="col-md-10">
-				<div ng-click="filterBuildTypesBy('')" class="saved-filter-box col-md-1">All Builds</div>
+				<div ng-click="filterBuildTypesBy('')" class="saved-filter-box col-md-1">
+					<div style="text-align: center; background-color: red; font-size: 8pt; height: 10pt; width: 10pt; right: 0%;">X</div>
+					All Builds
+				</div>
 				<div ng-repeat="savedFilter in savedFilters track by $index">
 					<div class="saved-filter-box col-md-1" ng-click="filterBuildTypesBy(savedFilter)">{{ savedFilter }}</div>
 				</div>
@@ -44,7 +47,7 @@
 
 			<div class="col-md-2"></div>
 			<div class="options col-md-10">
-				<input placeholder="Enter regex here" ng-model="buildTypeFilter" class="text-box">
+				<input placeholder="Enter regex here" ng-model="buildTypeFilter" class="text-box" ng-keypress="$event.keyCode == 13 ? filterBuildTypesBy(buildTypeFilter) : null">
 				<button ng-click='filterBuildTypesBy(buildTypeFilter)' class="filter-button"> Filter Builds </button>
 				<button ng-click='saveFilterTerm(buildTypeFilter)' class="save-button">Save</button>
 			</div>
@@ -57,6 +60,9 @@
 						 									'build-pending' : build.status == 'PENDING' }" class="build-inner-box">
 							<div>{{ build.projectName }}</div>
 							<div>{{ build.name }}</div>
+							<div ng-class="{'progress-bar-background' : build.state == 'running'}">
+								<div class="progress-bar" style="width: {{build.percentageComplete}}%"></div>
+							</div>
 						</div>
 					</div>
 				</div>
