@@ -44,7 +44,7 @@
 
 			<div class="col-md-2"></div>
 			<div class="options col-md-10">
-				<input placeholder="Enter regex here" ng-model="buildTypeFilter" class="text-box">
+				<input placeholder="Enter regex here" ng-model="buildTypeFilter" class="text-box" ng-keypress="$event.keyCode == 13 ? filterBuildTypesBy(buildTypeFilter) : null">
 				<button ng-click='filterBuildTypesBy(buildTypeFilter)' class="filter-button"> Filter Builds </button>
 				<button ng-click='saveFilterTerm(buildTypeFilter)' class="save-button">Save</button>
 			</div>

@@ -32,7 +32,6 @@ module.controller('mainController', ['$scope', '$q', '$interval', 'teamcityServi
 
 	$scope.saveFilterTerm = function(filterTerm) {
 		$scope.savedFilters.push(filterTerm);
-		$scope.filterBuildTypesBy(filterTerm);
 	}
 
 	$scope.removeFilterTerm = function(filterTerm) {
@@ -53,8 +52,7 @@ module.controller('mainController', ['$scope', '$q', '$interval', 'teamcityServi
 	}
 
 	var refreshView = function() {
-		console.log("View refreshed");
-		console.log("Here's a random number: " + Math.random())
+		console.log("View Refreshed. Here's a random number: " + Math.random())
 		getLastCompletedBuilds()
 		.then($scope.filterBuildTypesBy($scope.buildTypeFilter))
 		
