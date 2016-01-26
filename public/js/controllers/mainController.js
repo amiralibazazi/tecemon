@@ -2,7 +2,6 @@ var module = angular.module('tecemonController', ['teamcityservice', 'filters'])
 
 module.controller('mainController', ['$scope', '$q', '$interval', 'teamcityService', 
 							function($scope, $q, $interval, teamcityService) {
-	$scope.allProjects = [];
 	$scope.filteredProjects = [];
 	$scope.allBuildTypes = [];
 	$scope.allLastCompletedBuilds = [];
@@ -30,6 +29,13 @@ module.controller('mainController', ['$scope', '$q', '$interval', 'teamcityServi
 		return $q.defer().promise;
 	};
 
+	$scope.filterBuildTypesBy = function(filterTerm) {
+		var regex = new RegExp(filterTerm,"ig");
+		$scope.filteredLastCompletedBuilds = $scope.allBuildTypes.filter(function(buildType) {
+			return regex.test(JSON.stringify(buildType));
+		});
+	}
+
 	$scope.saveFilterTerm = function(filterTerm) {
 		$scope.savedFilters.push(filterTerm);
 	}
@@ -44,14 +50,8 @@ module.controller('mainController', ['$scope', '$q', '$interval', 'teamcityServi
 		.then(function(buildTypes) {$scope.allBuildTypes = buildTypes; $scope.filteredLastCompletedBuilds = buildTypes})
 		.then(getLastCompletedBuilds)
 
-	$scope.filterBuildTypesBy = function(filterTerm) {
-		var regex = new RegExp(filterTerm,"ig");
-		$scope.filteredLastCompletedBuilds = $scope.allBuildTypes.filter(function(buildType) {
-			return regex.test(JSON.stringify(buildType));
-		});
-	}
-
 	var refreshView = function() {
+		console.log("Refreshing View");
 		getLastCompletedBuilds()
 		.then($scope.filterBuildTypesBy($scope.buildTypeFilter))
 	}
