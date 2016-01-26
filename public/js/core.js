@@ -1,1 +1,1 @@
-angular.module('tecemon', ['tecemonController', 'sidebarcontroller']);
+angular.module('tecemon', ['tecemonController', 'tecemonservice', 'sidebarcontroller']);
