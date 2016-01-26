@@ -50,6 +50,10 @@ module.controller('mainController', ['$scope', '$q', '$interval', 'teamcityServi
 		.then(function(buildTypes) {$scope.allBuildTypes = buildTypes; $scope.filteredLastCompletedBuilds = buildTypes})
 		.then(getLastCompletedBuilds)
 
+	$scope.changeInputTextTo = function(savedFilter) {
+		$scope.buildTypeFilter = savedFilter;
+	}
+
 	var refreshView = function() {
 		console.log("Refreshing View");
 		getLastCompletedBuilds()

@@ -39,7 +39,7 @@
                     <div class="saved-filter-text">All Builds</div>
                 </div>
                 <div ng-repeat="savedFilter in savedFilters track by $index">
-                    <div class="saved-filter-box col-md-1" ng-click="filterBuildTypesBy(savedFilter); buildTypeFilter = savedFilter">
+                    <div class="saved-filter-box col-md-1" ng-click="filterBuildTypesBy(savedFilter); changeInputTextTo(savedFilter)">
                         <div class="close-filter-button" ng-click="removeFilterTerm(savedFilter)">X</div>
                         <div class="saved-filter-text">{{ savedFilter }}</div>
                     </div>
