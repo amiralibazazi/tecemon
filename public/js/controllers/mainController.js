@@ -24,30 +24,32 @@ module.controller('mainController', ['$scope', '$q', '$interval', 'teamcityServi
 		return $q.defer().promise;
 	};
 
-	var applyFilterToAllBuilds = function(filterTerm) {
+	var newFilter = function(filterTerm, name) {
+		return filterObject = {
+			"id": Date.now(),
+			"filterTerm": filterTerm,
+			"name": name
+		}
+	}
+
+	var refreshView = function() {
+		console.log("Refreshing View");
+		getLastCompletedBuilds()
+		.then($scope.applyFilterToAllBuilds($scope.currentFilterObject.filterTerm, $scope.currentFilterObject.name))
+	}
+
+	$scope.applyFilterToAllBuilds = function(filterTerm, name) {
+		if (name) $scope.filterName = name;
 		var regex = new RegExp(filterTerm,"ig");
+		$scope.currentFilterObject = newFilter(filterTerm, name);
 		$scope.filteredLastCompletedBuilds = $scope.allBuildTypes.filter(function(buildType) {
 			return regex.test(JSON.stringify(buildType));
 		});
 	}
 
-	$scope.runNewFilter = function(filterTerm, name) {
-		$scope.currentFilterObject = {"id": Date.now(), "filterTerm": filterTerm, "name": name}
-		applyFilterToAllBuilds(filterTerm)
-	}
-
-	$scope.runSavedFilter = function(filterObject) {
-		for (var i = $scope.savedFilters.length - 1; i >= 0; i--) {
-    		if ($scope.savedFilters[i].id === filterObject.id) {
-    			$scope.currentFilterObject = $scope.savedFilters[i];
-    			applyFilterToAllBuilds(filterObject.filterTerm)
-    		}
-		}
-	}
-
 	$scope.saveFilterObject = function(filterTerm, name) {
 		if (name == "") {name = filterTerm};
-		$scope.savedFilters.push($scope.newFilter(filterTerm, name));
+		$scope.savedFilters.push(newFilter(filterTerm, name));
 	}
 
 	$scope.removeFilterTerm = function(filterObject) {
@@ -59,24 +61,6 @@ module.controller('mainController', ['$scope', '$q', '$interval', 'teamcityServi
 	$scope.allBuildTypes = teamcityService.getAllBuildTypes()
 		.then(function(buildTypes) {$scope.allBuildTypes = buildTypes; $scope.filteredLastCompletedBuilds = buildTypes})
 		.then(getLastCompletedBuilds)
-
-	$scope.changeInputTextTo = function(savedFilterTerm) {
-		$scope.buildTypeFilter = savedFilterTerm;
-	}
-
-	var refreshView = function() {
-		getLastCompletedBuilds()
-		.then($scope.runSavedFilter($scope.currentFilterObject))
-	}
-
-	$scope.newFilter = function(filterTerm, name) {
-		var filterObject = {
-			"id": Date.now(),
-			"filterTerm": filterTerm,
-			"name": name
-		}
-		return filterObject;
-	}
 
 	$interval(refreshView, 10000);
 }]);
