@@ -53,22 +53,28 @@
 				<button ng-click='filterBuildTypesBy(buildTypeFilter)' class="filter-button"> Filter Builds </button>
 				<button ng-click='saveFilterTerm(buildTypeFilter)' class="save-button">Save</button>
 			</div>
-	
+			
+			<!-- Builds container -->
 			<div class="builds-container container">
 				<div ng-repeat="build in filteredLastCompletedBuilds | statusSorter:'status' track by $index">
+					
 					<div class="col-md-3 col-sm-6 col-lg-3 build-outer-box">
-						<div ng-model="buildBox" ng-class="{'build-success' : build.status == 'SUCCESS', 
-															'build-failure' : build.status == 'FAILURE',
-						 									'build-pending' : build.status == 'PENDING' }" class="build-inner-box">
-							<div>{{ build.projectName }}</div>
-							<div>{{ build.name }}</div>
-							<div ng-class="{'progress-bar-background' : build.state == 'running'}">
-								<div ng-class="{'green-color' :  build.status == 'SUCCESS', 'red-color' :  build.status == 'FAILURE'}" class="progress-bar" style="width: {{build.percentageComplete}}%"></div>
+						<a style="display:block" href="{{ build.webUrl }}" target="_blank">
+							<div ng-model="buildBox" class="build-inner-box"
+							ng-class="{'build-success' : build.status == 'SUCCESS', 
+																'build-failure' : build.status == 'FAILURE',
+							 									'build-pending' : build.status == 'PENDING' }" >
+								<div>{{ build.projectName }}</div>
+								<div>{{ build.name }}</div>
+								<div ng-class="{'progress-bar-background' : build.state == 'running'}">
+									<div ng-class="{'green-color' :  build.status == 'SUCCESS', 'red-color' :  build.status == 'FAILURE'}" class="progress-bar" style="width: {{build.percentageComplete}}%"></div>
+								</div>
 							</div>
-						</div>
+						</a>
 					</div>
 				</div>
 			</div>
+			<!-- End of Builds container -->
 		</div>
 	</body>
 </html>

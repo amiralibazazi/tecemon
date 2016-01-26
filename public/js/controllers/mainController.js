@@ -17,6 +17,7 @@ module.controller('mainController', ['$scope', '$q', '$interval', 'teamcityServi
 				lastCompletedBuilds.push(build);
 			});
 		});
+		console.log("LAST COMPLETED BUILDS " + JSON.stringify(lastCompletedBuilds));
 		$scope.allLastCompletedBuilds = lastCompletedBuilds;
 		return $q.defer().promise;
 	};

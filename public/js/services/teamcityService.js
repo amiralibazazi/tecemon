@@ -49,6 +49,7 @@ teamcityService.service('teamcityService', ['$http', '$q', function($http, $q) {
 	}
 
 	var enrichBuildType = function(buildType, builds) {
+		console.log("BUILDS FOR BUILD TYPE " + JSON.stringify(builds));
 		var lastCompletedBuild = buildType;
 		if(builds.build[0].status == 'SUCCESS') lastCompletedBuild.status = 'SUCCESS'
     	if(builds.build[0].status == 'FAILURE') lastCompletedBuild.status = 'FAILURE'
