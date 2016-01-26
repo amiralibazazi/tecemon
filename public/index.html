@@ -35,13 +35,15 @@
 				<img src="./resources/Crowdmix_C_Icon_Mono_RGB_White.png" class="crowdmix-logo">
 			</div>
 			<ul class="col-md-10">
-				<div ng-click="filterBuildTypesBy('')" class="saved-filter-box col-md-1">
-					<div style="text-align: center; background-color: red; font-size: 8pt; height: 10pt; width: 10pt; right: 0%;">X</div>
-					All Builds
-				</div>
-				<div ng-repeat="savedFilter in savedFilters track by $index">
-					<div class="saved-filter-box col-md-1" ng-click="filterBuildTypesBy(savedFilter)">{{ savedFilter }}</div>
-				</div>
+				<div ng-click="filterBuildTypesBy(''); buildTypeFilter = ''" class="saved-filter-box col-md-1">
+                    <div class="saved-filter-text">All Builds</div>
+                </div>
+                <div ng-repeat="savedFilter in savedFilters track by $index">
+                    <div class="saved-filter-box col-md-1" ng-click="filterBuildTypesBy(savedFilter); buildTypeFilter = savedFilter">
+                        <div class="close-filter-button" ng-click="removeFilterTerm(savedFilter)">X</div>
+                        <div class="saved-filter-text">{{ savedFilter }}</div>
+                    </div>
+                </div>
 			</ul>
 			<!-- End of Tab list -->
 
@@ -54,14 +56,14 @@
 	
 			<div class="builds-container container">
 				<div ng-repeat="build in filteredLastCompletedBuilds | statusSorter:'status' track by $index">
-					<div class="col-md-3 col-sm-6 col-xl-2 build-outer-box">
+					<div class="col-md-3 col-sm-6 col-lg-3 build-outer-box">
 						<div ng-model="buildBox" ng-class="{'build-success' : build.status == 'SUCCESS', 
 															'build-failure' : build.status == 'FAILURE',
 						 									'build-pending' : build.status == 'PENDING' }" class="build-inner-box">
 							<div>{{ build.projectName }}</div>
 							<div>{{ build.name }}</div>
 							<div ng-class="{'progress-bar-background' : build.state == 'running'}">
-								<div class="progress-bar" style="width: {{build.percentageComplete}}%"></div>
+								<div ng-class="{'green-color' :  build.status == 'SUCCESS', 'red-color' :  build.status == 'FAILURE'}" class="progress-bar" style="width: {{build.percentageComplete}}%"></div>
 							</div>
 						</div>
 					</div>
