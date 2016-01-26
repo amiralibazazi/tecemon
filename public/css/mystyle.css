@@ -14,17 +14,17 @@ body {
 }
 
 .crowdmix-logo {
-	max-height: 80pt !important;
+	max-height: 120pt !important;
 	display: block;
-	margin-left: auto;
-	margin-right: auto;
+	margin: 20pt auto;
 }
 
 .main-view {
-	padding-top: 20pt;
+	padding-top: 5pt;
 	margin: 0 5% 0 5%;
 	left: 0;
 	right: 0;
+	padding-left: 250pt;
 }
 
 .text-box {
@@ -33,25 +33,19 @@ body {
 	background-color: #F0F0F0;
 	height: 20pt;
 	padding-left: 5pt;
+	margin-bottom: 5pt;
 	min-width: 200pt;
 }
 
 .filter-button {
   	border: 0 none;
-  	border-radius: 6px;
+  	border-radius: 5px;
   	height: 20pt;
   	background-color: #BABABA;
 }
 
-.save-button {
-	border: 0 none;
-  	border-radius: 6px;
-  	height: 20pt;
-  	background-color: #BABABA;
-}
-
-.options {
-	padding: 10pt 0pt 20pt 0pt;
+.button-container {
+	margin-bottom: 10pt;
 }
 
 .build-outer-box {
@@ -101,11 +95,11 @@ body {
 	cursor: pointer;
     height: 30pt;
     background-color: #5A98D6; 
-    margin: 5pt; 
     width: auto;
     overflow: hidden;
     position: relative;
-    border-radius: 5px 5px 0 0;
+    border-radius: 3px;
+    margin-bottom: 5pt;
 }
 
 .progress-bar-background {
@@ -148,4 +142,39 @@ body {
 
 .red-color {
 	background-color: #BF4949;
+}
+
+.sidebar {
+    position : absolute;
+    top : 0;
+    bottom: 0;
+    left : -250pt;
+    transition : 100ms left;
+    z-index: 1;
+    background-color: #616363;
+    padding: 10pt;
+}
+
+#navigation-toggle {
+        position : absolute;
+        left : 220pt;
+        background-color: #5A98D6;
+        color : white;
+        padding : 5px;
+        margin-top: 10pt;
+        border-radius: 0 5px 5px 0;
+        z-index: 2;
+        padding-left: 35pt;
+}
+
+.show {
+    left : 0;
+}
+
+.navigation {
+	padding-left: 0;
+}
+
+.navigation-items a:hover {
+    background-color : #222;
 }

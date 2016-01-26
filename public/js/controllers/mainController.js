@@ -8,6 +8,9 @@ module.controller('mainController', ['$scope', '$q', '$interval', 'teamcityServi
 	$scope.filteredLastCompletedBuilds = [];
 	$scope.savedFilters = [];
 	$scope.buildTypeFilter = "";
+	$scope.filterName = "";
+	$scope.defaultFilterObject = {"id": null, "filterTerm": "", "name": ""}
+	$scope.currentFilterObject = $scope.defaultFilterObject;
 
 	var getLastCompletedBuilds = function() {
 		var lastCompletedBuilds = [];		
@@ -21,36 +24,43 @@ module.controller('mainController', ['$scope', '$q', '$interval', 'teamcityServi
 		return $q.defer().promise;
 	};
 
-	$scope.filterBuildTypesBy = function(filterTerm) {
+	var newFilter = function(filterTerm, name) {
+		return filterObject = {
+			"id": Date.now(),
+			"filterTerm": filterTerm,
+			"name": name
+		}
+	}
+
+	var refreshView = function() {
+		console.log("Refreshing View");
+		getLastCompletedBuilds()
+		.then($scope.applyFilterToAllBuilds($scope.currentFilterObject.filterTerm, $scope.currentFilterObject.name))
+	}
+
+	$scope.applyFilterToAllBuilds = function(filterTerm, name) {
+		if (name) $scope.filterName = name;
 		var regex = new RegExp(filterTerm,"ig");
+		$scope.currentFilterObject = newFilter(filterTerm, name);
 		$scope.filteredLastCompletedBuilds = $scope.allBuildTypes.filter(function(buildType) {
 			return regex.test(JSON.stringify(buildType));
 		});
 	}
 
-	$scope.saveFilterTerm = function(filterTerm) {
-		$scope.savedFilters.push(filterTerm);
+	$scope.saveFilterObject = function(filterTerm, name) {
+		if (name == "") {name = filterTerm};
+		$scope.savedFilters.push(newFilter(filterTerm, name));
 	}
 
-	$scope.removeFilterTerm = function(filterTerm) {
+	$scope.removeFilterTerm = function(filterObject) {
 		for (var i = $scope.savedFilters.length - 1; i >= 0; i--) {
-    		if ($scope.savedFilters[i] === filterTerm) {$scope.savedFilters.splice(i, 1);}
+    		if ($scope.savedFilters[i].id === filterObject.id) {$scope.savedFilters.splice(i, 1);}
 		}
 	}
 
 	$scope.allBuildTypes = teamcityService.getAllBuildTypes()
 		.then(function(buildTypes) {$scope.allBuildTypes = buildTypes; $scope.filteredLastCompletedBuilds = buildTypes})
 		.then(getLastCompletedBuilds)
-
-	$scope.changeInputTextTo = function(savedFilter) {
-		$scope.buildTypeFilter = savedFilter;
-	}
-
-	var refreshView = function() {
-		console.log("Refreshing View");
-		getLastCompletedBuilds()
-		.then($scope.filterBuildTypesBy($scope.buildTypeFilter))
-	}
 
 	$interval(refreshView, 10000);
 }]);
