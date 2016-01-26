@@ -34,21 +34,21 @@
                 <a href="#" id="navigation-toggle" ng-click="toggleState()">▶</a>
                 <ul class="navigation">
                 	<img src="./resources/Crowdmix_C_Icon_Mono_RGB_White.png" class="crowdmix-logo">
-                	<p><input placeholder="Enter regex here" ng-model="buildTypeFilter" class="text-box" ng-keypress="$event.keyCode == 13 ? filterBuildTypesBy(buildTypeFilter) : null"></p>
+                	<p><input placeholder="Enter regex here" ng-model="buildTypeFilter" class="text-box" ng-keypress="$event.keyCode == 13 ? runNewFilter(buildTypeFilter, filterName) : null"></p>
                 	<p><input placeholder="Name (optional)" ng-model="filterName" class="text-box"></p>
                 	<div class="button-container">
-                		<button ng-click="filterBuildTypesBy(buildTypeFilter); changeInputTextTo(buildTypeFilter)" class="filter-button"> Filter Builds </button>
-                		<button ng-click="saveFilterTerm(buildTypeFilter)" class="filter-button">Save</button>
+                		<button ng-click="runNewFilter(buildTypeFilter, filterName)" class="filter-button"> Filter Builds </button>
+                		<button ng-click="saveFilterObject(buildTypeFilter, filterName)" class="filter-button">Save</button>
                 	</div>
 
-                	<div ng-click="filterBuildTypesBy(''); buildTypeFilter = ''" class="saved-filter-box">
+                	<div ng-click="runNewFilter(defaultFilterObject.filterTerm, defaultFilterObject.name); currentFilterObject = defaultFilterObject" class="saved-filter-box">
                     	<div class="saved-filter-text">All Builds</div>
                 	</div>
 
-                	<div ng-repeat="savedFilter in savedFilters track by $index">
-                    	<div class="saved-filter-box" ng-click="filterBuildTypesBy(savedFilter); changeInputTextTo(savedFilter)">
-                        	<div class="close-filter-button" ng-click="removeFilterTerm(savedFilter)">X</div>
-                        	<div class="saved-filter-text">{{ savedFilter }}</div>
+                	<div ng-repeat="savedFilterObject in savedFilters track by $index">
+                    	<div class="saved-filter-box" ng-click="runSavedFilter(savedFilterObject)">
+                        	<div class="close-filter-button" ng-click="removeFilterTerm(savedFilterObject)">X</div>
+                        	<div class="saved-filter-text">{{ savedFilterObject.name }}</div>
                     	</div>
                 	</div>
 
@@ -58,6 +58,7 @@
 
 		<div class="main-view container">
 			<div class="builds-container container">
+				<h1 style="color: white">{{ currentFilterObject.name }}</h1>
 				<div ng-repeat="build in filteredLastCompletedBuilds | statusSorter:'status' track by $index">
 					
 					<div class="col-md-3 col-sm-6 col-lg-3 build-outer-box">

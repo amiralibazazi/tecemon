@@ -8,7 +8,9 @@ module.controller('mainController', ['$scope', '$q', '$interval', 'teamcityServi
 	$scope.filteredLastCompletedBuilds = [];
 	$scope.savedFilters = [];
 	$scope.buildTypeFilter = "";
-	$scope.currentFilter = "";
+	$scope.filterName = "";
+	$scope.defaultFilterObject = {"id": null, "filterTerm": "", "name": ""}
+	$scope.currentFilterObject = $scope.defaultFilterObject;
 
 	var getLastCompletedBuilds = function() {
 		var lastCompletedBuilds = [];		
@@ -22,21 +24,35 @@ module.controller('mainController', ['$scope', '$q', '$interval', 'teamcityServi
 		return $q.defer().promise;
 	};
 
-	$scope.filterBuildTypesBy = function(filterTerm) {
-		$scope.currentFilter = filterTerm;
-		var regex = new RegExp($scope.currentFilter,"ig");
+	var applyFilterToAllBuilds = function(filterTerm) {
+		var regex = new RegExp(filterTerm,"ig");
 		$scope.filteredLastCompletedBuilds = $scope.allBuildTypes.filter(function(buildType) {
 			return regex.test(JSON.stringify(buildType));
 		});
 	}
 
-	$scope.saveFilterTerm = function(filterTerm) {
-		$scope.savedFilters.push(filterTerm);
+	$scope.runNewFilter = function(filterTerm, name) {
+		$scope.currentFilterObject = {"id": Date.now(), "filterTerm": filterTerm, "name": name}
+		applyFilterToAllBuilds(filterTerm)
 	}
 
-	$scope.removeFilterTerm = function(filterTerm) {
+	$scope.runSavedFilter = function(filterObject) {
 		for (var i = $scope.savedFilters.length - 1; i >= 0; i--) {
-    		if ($scope.savedFilters[i] === filterTerm) {$scope.savedFilters.splice(i, 1);}
+    		if ($scope.savedFilters[i].id === filterObject.id) {
+    			$scope.currentFilterObject = $scope.savedFilters[i];
+    			applyFilterToAllBuilds(filterObject.filterTerm)
+    		}
+		}
+	}
+
+	$scope.saveFilterObject = function(filterTerm, name) {
+		if (name == "") {name = filterTerm};
+		$scope.savedFilters.push($scope.newFilter(filterTerm, name));
+	}
+
+	$scope.removeFilterTerm = function(filterObject) {
+		for (var i = $scope.savedFilters.length - 1; i >= 0; i--) {
+    		if ($scope.savedFilters[i].id === filterObject.id) {$scope.savedFilters.splice(i, 1);}
 		}
 	}
 
@@ -44,16 +60,22 @@ module.controller('mainController', ['$scope', '$q', '$interval', 'teamcityServi
 		.then(function(buildTypes) {$scope.allBuildTypes = buildTypes; $scope.filteredLastCompletedBuilds = buildTypes})
 		.then(getLastCompletedBuilds)
 
-	$scope.changeInputTextTo = function(savedFilter) {
-		console.log("SAVED FILTER BEFORE : " + $scope.buildTypeFilter)
-		$scope.buildTypeFilter = savedFilter;
-		console.log("SAVED FILTER AFTER : " + $scope.buildTypeFilter)
+	$scope.changeInputTextTo = function(savedFilterTerm) {
+		$scope.buildTypeFilter = savedFilterTerm;
 	}
 
 	var refreshView = function() {
-		console.log("Refreshing View");
 		getLastCompletedBuilds()
-		.then($scope.filterBuildTypesBy($scope.currentFilter))
+		.then($scope.runSavedFilter($scope.currentFilterObject))
+	}
+
+	$scope.newFilter = function(filterTerm, name) {
+		var filterObject = {
+			"id": Date.now(),
+			"filterTerm": filterTerm,
+			"name": name
+		}
+		return filterObject;
 	}
 
 	$interval(refreshView, 10000);
