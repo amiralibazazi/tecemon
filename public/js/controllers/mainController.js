@@ -6,7 +6,7 @@ module.controller('mainController', ['$scope', '$q', '$interval', 'teamcityServi
 	$scope.allBuildTypes = [];
 	$scope.allLastCompletedBuilds = [];
 	$scope.filteredLastCompletedBuilds = [];
-	$scope.savedFilters = [];
+	$scope.savedFilters = tecemonService.getAllFilters();
 	$scope.buildTypeFilter = "";
 	$scope.filterName = "";
 	$scope.defaultFilterObject = {"id": null, "filterTerm": "", "name": ""}

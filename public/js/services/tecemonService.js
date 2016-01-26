@@ -3,10 +3,17 @@ var tecemonService = angular.module('tecemonservice', []);
 tecemonService.service('tecemonService', ['$http', '$q', function($http, $q) {
 	var tecemonService = this;
 
-	tecemonService.hello = function() {
-		$http.get('/hello')
+	tecemonService.save = function(filterTerm) {
+		$http.post('/filters', filterTerm)
 			.then(function(response) {
-				return response.data;
-			})
+				return response;
+			});
 	};
+
+	tecemonService.getAllFilters = function() {
+		return $http.get('filters')
+			.then(function(response) {
+				return response;
+			});
+	}
 }]);
