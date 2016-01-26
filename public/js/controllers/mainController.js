@@ -10,22 +10,14 @@ module.controller('mainController', ['$scope', '$q', '$interval', 'teamcityServi
 	$scope.buildTypeFilter = "";
 
 	var getLastCompletedBuilds = function() {
-		var retrievedBuilds = [];
+		var lastCompletedBuilds = [];		
 		angular.forEach($scope.allBuildTypes, function(buildType) {
-			teamcityService.getBuildsFor(buildType.id)
-			.then(function(builds) {
-				if (builds.count != 0) {
-					if (builds.build[0].state == 'running') {
-						buildType.percentageComplete = builds.build[0].percentageComplete;
-					}
-					if(builds.build[0].status == 'SUCCESS') buildType.status = 'SUCCESS'
-					if(builds.build[0].status == 'FAILURE') buildType.status = 'FAILURE'
-				} else buildType.status = 'PENDING' 
-				if (builds.build) buildType.state = builds.build[0].state;
-				retrievedBuilds.push(buildType);
+			teamcityService.constructLastCompletedBuildFor(buildType)
+			.then(function(build) {
+				lastCompletedBuilds.push(build);
 			});
 		});
-		$scope.allLastCompletedBuilds = retrievedBuilds;
+		$scope.allLastCompletedBuilds = lastCompletedBuilds;
 		return $q.defer().promise;
 	};
 
