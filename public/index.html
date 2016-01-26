@@ -24,37 +24,39 @@
 		<script src="./js/core.js"></script> <!-- load our main application -->
 		<script src="./js/filters.js"></script>
 		<script src="./js/controllers/mainController.js"></script> <!-- load up our controller -->
+		<script src="./js/controllers/sidebarController.js"></script> 
 		<script src="./js/services/teamcityService.js"></script>
 	</head>
 	
 	<body ng-controller="mainController" ng-cloak>
-		<div class="main-view container">
-	
-			<!-- Tab List -->	
-			<div class="col-md-2">
-				<img src="./resources/Crowdmix_C_Icon_Mono_RGB_White.png" class="crowdmix-logo">
-			</div>
-			<ul class="col-md-10">
-				<div ng-click="filterBuildTypesBy(''); buildTypeFilter = ''" class="saved-filter-box col-md-1">
-                    <div class="saved-filter-text">All Builds</div>
-                </div>
-                <div ng-repeat="savedFilter in savedFilters track by $index">
-                    <div class="saved-filter-box col-md-1" ng-click="filterBuildTypesBy(savedFilter); changeInputTextTo(savedFilter)">
-                        <div class="close-filter-button" ng-click="removeFilterTerm(savedFilter)">X</div>
-                        <div class="saved-filter-text">{{ savedFilter }}</div>
-                    </div>
-                </div>
-			</ul>
-			<!-- End of Tab list -->
+		<div class="container">
+            <div ng-controller="sidebarController" class="sidebar" sidebar-directive="state">
+                <a href="#" id="navigation-toggle" ng-click="toggleState()">▶</a>
+                <ul class="navigation">
+                	<img src="./resources/Crowdmix_C_Icon_Mono_RGB_White.png" class="crowdmix-logo">
+                	<p><input placeholder="Enter regex here" ng-model="buildTypeFilter" class="text-box" ng-keypress="$event.keyCode == 13 ? filterBuildTypesBy(buildTypeFilter) : null"></p>
+                	<p><input placeholder="Name (optional)" ng-model="filterName" class="text-box"></p>
+                	<div class="button-container">
+                		<button ng-click="filterBuildTypesBy(buildTypeFilter); changeInputTextTo(buildTypeFilter)" class="filter-button"> Filter Builds </button>
+                		<button ng-click="saveFilterTerm(buildTypeFilter)" class="filter-button">Save</button>
+                	</div>
 
-			<div class="col-md-2"></div>
-			<div class="options col-md-10">
-				<input placeholder="Enter regex here" ng-model="buildTypeFilter" class="text-box" ng-keypress="$event.keyCode == 13 ? filterBuildTypesBy(buildTypeFilter) : null">
-				<button ng-click='filterBuildTypesBy(buildTypeFilter)' class="filter-button"> Filter Builds </button>
-				<button ng-click='saveFilterTerm(buildTypeFilter)' class="save-button">Save</button>
-			</div>
-			
-			<!-- Builds container -->
+                	<div ng-click="filterBuildTypesBy(''); buildTypeFilter = ''" class="saved-filter-box">
+                    	<div class="saved-filter-text">All Builds</div>
+                	</div>
+
+                	<div ng-repeat="savedFilter in savedFilters track by $index">
+                    	<div class="saved-filter-box" ng-click="filterBuildTypesBy(savedFilter); changeInputTextTo(savedFilter)">
+                        	<div class="close-filter-button" ng-click="removeFilterTerm(savedFilter)">X</div>
+                        	<div class="saved-filter-text">{{ savedFilter }}</div>
+                    	</div>
+                	</div>
+
+                </ul>
+            </div>
+        </div>
+
+		<div class="main-view container">
 			<div class="builds-container container">
 				<div ng-repeat="build in filteredLastCompletedBuilds | statusSorter:'status' track by $index">
 					

@@ -8,6 +8,7 @@ module.controller('mainController', ['$scope', '$q', '$interval', 'teamcityServi
 	$scope.filteredLastCompletedBuilds = [];
 	$scope.savedFilters = [];
 	$scope.buildTypeFilter = "";
+	$scope.currentFilter = "";
 
 	var getLastCompletedBuilds = function() {
 		var lastCompletedBuilds = [];		
@@ -22,7 +23,8 @@ module.controller('mainController', ['$scope', '$q', '$interval', 'teamcityServi
 	};
 
 	$scope.filterBuildTypesBy = function(filterTerm) {
-		var regex = new RegExp(filterTerm,"ig");
+		$scope.currentFilter = filterTerm;
+		var regex = new RegExp($scope.currentFilter,"ig");
 		$scope.filteredLastCompletedBuilds = $scope.allBuildTypes.filter(function(buildType) {
 			return regex.test(JSON.stringify(buildType));
 		});
@@ -43,13 +45,15 @@ module.controller('mainController', ['$scope', '$q', '$interval', 'teamcityServi
 		.then(getLastCompletedBuilds)
 
 	$scope.changeInputTextTo = function(savedFilter) {
+		console.log("SAVED FILTER BEFORE : " + $scope.buildTypeFilter)
 		$scope.buildTypeFilter = savedFilter;
+		console.log("SAVED FILTER AFTER : " + $scope.buildTypeFilter)
 	}
 
 	var refreshView = function() {
 		console.log("Refreshing View");
 		getLastCompletedBuilds()
-		.then($scope.filterBuildTypesBy($scope.buildTypeFilter))
+		.then($scope.filterBuildTypesBy($scope.currentFilter))
 	}
 
 	$interval(refreshView, 10000);
