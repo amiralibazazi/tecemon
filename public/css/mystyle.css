@@ -3,16 +3,6 @@ body {
 	background-color: #2F3030;
 }
 
-.nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover {
-	color: #F0F0F0;
-	background-color: #2F3030;
-	border-color: #5C6166 #5C6166 transparent;
-}
-
-.nav-tabs {
-	border-bottom: 1px solid #5C6166;
-}
-
 .crowdmix-logo {
 	max-height: 120pt !important;
 	display: block;
@@ -102,6 +92,7 @@ body {
     width: 10pt; 
     font-weight: bold;
     z-index: 3;
+    background-color: #5A98D6;
 }
 
 .saved-filter-text {
@@ -119,6 +110,10 @@ body {
 
 .pending {
 	background-color: #838587;
+}
+
+.running {
+	background-color: #E8CE38;
 }
 
 .sidebar {
