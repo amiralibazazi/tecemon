@@ -6,8 +6,10 @@ filters.filter('statusSorter', function() {
     angular.forEach(builds, function(build) {
       sortedBuilds.push(build);
     });
-    sortedBuilds.sort(function (left, right) {    
-        if (left.status == right.status) return 0;
+    sortedBuilds.sort(function (left, right) { 
+      if (right.state == 'running') return 1; 
+      if (left.state == 'running') return -1;  
+      if (left.status == right.status) return 0;
     	if (left.status == 'SUCCESS') return 1;
     	if (left.status == 'FAILURE') return -1;
     	if (left.status == 'PENDING' && right.status == 'FAILURE') return 1;
@@ -15,4 +17,4 @@ filters.filter('statusSorter', function() {
     });
     return sortedBuilds;
   };
-});
+})

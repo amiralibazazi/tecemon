@@ -119,6 +119,10 @@ body {
 	background-color: #838587;
 }
 
+.running {
+	background-color: #EBD91A;
+}
+
 .sidebar {
     position : absolute;
     top : 0;
