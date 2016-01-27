@@ -64,11 +64,11 @@
 					<div class="col-md-3 col-sm-6 col-lg-3 build-outer-box">
 						<a style="display:block" href="{{ build.webUrl }}" target="_blank">
 							<div ng-model="buildBox" class="build-inner-box"
-							ng-class="{'build-success' : build.status == 'SUCCESS', 
-																'build-failure' : build.status == 'FAILURE',
-							 									'build-pending' : build.status == 'PENDING' }" >
-								<div>{{ build.projectName }}</div>
-								<div>{{ build.name }}</div>
+							ng-class="{'green-color' : build.status == 'SUCCESS', 
+																'red-color' : build.status == 'FAILURE',
+							 									'grey-color' : build.status == 'PENDING' }" >
+								<div class="project-name-text">{{ build.projectName }}</div>
+								<div class="build-name-text">{{ build.name }}</div>
 								<div ng-class="{'progress-bar-background' : build.state == 'running'}">
 									<div ng-class="{'green-color' :  build.status == 'SUCCESS', 'red-color' :  build.status == 'FAILURE'}" class="progress-bar" style="width: {{build.percentageComplete}}%"></div>
 								</div>
