@@ -1,16 +1,13 @@
 var module = angular.module('tecemonController', ['teamcityservice', 'filters']);
 
-module.controller('mainController', ['$scope', '$q', '$interval', 'teamcityService', 
-							function($scope, $q, $interval, teamcityService) {
-	$scope.filteredProjects = [];
+module.controller('mainController', ['$scope', '$q', '$interval', 'teamcityService', 'tecemonService',
+							function($scope, $q, $interval, teamcityService, tecemonService) {
 	$scope.allBuildTypes = [];
 	$scope.allLastCompletedBuilds = [];
 	$scope.filteredLastCompletedBuilds = [];
 	$scope.savedFilters = [];
-	$scope.buildTypeFilter = "";
-	$scope.filterName = "";
-	$scope.defaultFilterObject = {"id": null, "filterTerm": "", "name": ""}
-	$scope.currentFilterObject = $scope.defaultFilterObject;
+	$scope.defaultFilter = {id: null,filterTerm: '',name: ''};
+	$scope.currentFilter = $scope.defaultFilter;
 
 	var getLastCompletedBuilds = function() {
 		var lastCompletedBuilds = [];		
@@ -24,43 +21,50 @@ module.controller('mainController', ['$scope', '$q', '$interval', 'teamcityServi
 		return $q.defer().promise;
 	};
 
-	var newFilter = function(filterTerm, name) {
-		return filterObject = {
-			"id": Date.now(),
-			"filterTerm": filterTerm,
-			"name": name
-		}
+	var withId = function(filter) {
+		var min = 100000000000; var max = 900000000000
+		filter.id = Math.floor(Math.random() * (max - min)) + min;
+		return filter;
 	}
 
 	var refreshView = function() {
 		console.log("Refreshing View");
 		getLastCompletedBuilds()
-		.then($scope.applyFilterToAllBuilds($scope.currentFilterObject.filterTerm, $scope.currentFilterObject.name))
+		.then($scope.applyFilterToAllBuilds($scope.currentFilter));
 	}
 
-	$scope.applyFilterToAllBuilds = function(filterTerm, name) {
-		if (name) $scope.filterName = name;
-		var regex = new RegExp(filterTerm,"ig");
-		$scope.currentFilterObject = newFilter(filterTerm, name);
+	$scope.getAllFilters = function() {
+		console.log("Refreshing Filters : " + JSON.stringify($scope.savedFilters));
+		tecemonService.getAllFilters()
+		.then(function(filters) {
+			$scope.savedFilters = filters
+		});
+	}
+
+	$scope.applyFilterToAllBuilds = function(filter) {
+		var regex = new RegExp(filter.filterTerm,"ig");
+		$scope.currentFilter = filter;
 		$scope.filteredLastCompletedBuilds = $scope.allBuildTypes.filter(function(buildType) {
 			return regex.test(JSON.stringify(buildType));
 		});
 	}
 
-	$scope.saveFilterObject = function(filterTerm, name) {
-		if (name == "") {name = filterTerm};
-		$scope.savedFilters.push(newFilter(filterTerm, name));
+	$scope.saveFilter = function(filter) {
+		if (!filter.name) {filter.name = filter.filterTerm};
+		console.log("Saving new filter : " + filter.name)
+		tecemonService.save(withId(filter))
+		$scope.getAllFilters();	
 	}
 
-	$scope.removeFilterTerm = function(filterObject) {
-		for (var i = $scope.savedFilters.length - 1; i >= 0; i--) {
-    		if ($scope.savedFilters[i].id === filterObject.id) {$scope.savedFilters.splice(i, 1);}
-		}
+	$scope.removeFilterTerm = function(filter) {
+		tecemonService.deleteFilter(filter)
+		$scope.getAllFilters();
 	}
 
 	$scope.allBuildTypes = teamcityService.getAllBuildTypes()
 		.then(function(buildTypes) {$scope.allBuildTypes = buildTypes; $scope.filteredLastCompletedBuilds = buildTypes})
 		.then(getLastCompletedBuilds)
 
+	$scope.getAllFilters();
 	$interval(refreshView, 10000);
 }]);
