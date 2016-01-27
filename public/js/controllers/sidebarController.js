@@ -6,7 +6,7 @@ module.controller('sidebarController', function($scope) {
     
     $scope.state = true;
     
-    $scope.toggleState = function() {
+    $scope.toggleNavBar = function() {
         $scope.state = !$scope.state;
     };
     

@@ -80,6 +80,7 @@ body {
     background-color: #2F3030;
     border-radius: 5px;
     padding: 2px;
+    bottom: 0;
 }
 
 .progress-bar {
@@ -100,6 +101,7 @@ body {
     height: 10pt; 
     width: 10pt; 
     font-weight: bold;
+    z-index: 3;
 }
 
 .saved-filter-text {
@@ -108,11 +110,11 @@ body {
 }
 
 .success {
-	background-color: #78D699;
+	background-color: #38E876;
 }
 
 .failure {
-	background-color: #BF4949;
+	background-color: #D63E3E;
 }
 
 .pending {
@@ -144,6 +146,10 @@ body {
 
 .show {
     left : 0;
+}
+
+.bumpMain {
+	left: 250pt;
 }
 
 .navigation {
