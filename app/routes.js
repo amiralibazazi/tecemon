@@ -1,11 +1,7 @@
 module.exports = function(app) {
-
-
 	var bodyParser = require('body-parser');
 	var multer = require('multer'); // v1.0.5
 
-	var savedFilters = [];
-	
 	var options = {
 		dotfiles: 'ignore',
 		root: "./public/",
@@ -14,6 +10,8 @@ module.exports = function(app) {
 			'x-sent': true,
 		}
 	}
+
+	var savedFilters = [];
 
 	app.use(bodyParser.json()); // for parsing application/json
 	app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencode
@@ -37,5 +35,13 @@ module.exports = function(app) {
 	app.get('/filters', function(req, res) {
 		console.log("Retrieving filters : " + JSON.stringify(savedFilters));
 		res.send(savedFilters);
-	})
+	});
+
+	app.delete('/filters/:id', function(req, res) {
+		var filterId = req.params.id
+		console.log("Deleting filter with id : " + JSON.stringify(filterId));
+		for (var i = savedFilters.length - 1; i >= 0; i--) {
+    		if (savedFilters[i].id == filterId) {savedFilters.splice(i, 1);};
+		};
+	});
 }

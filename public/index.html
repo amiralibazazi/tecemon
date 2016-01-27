@@ -42,7 +42,8 @@
                 		<button ng-click="saveFilterObject(buildTypeFilter, filterName)" class="filter-button">Save</button>
                 	</div>
 
-                	<div ng-click="applyFilterToAllBuilds(defaultFilterObject.filterTerm, defaultFilterObject.name); currentFilterObject = defaultFilterObject" class="saved-filter-box">
+                	<div ng-click="applyFilterToAllBuilds(defaultFilterObject.filterTerm, defaultFilterObject.name);"
+                	class="saved-filter-box">
                     	<div class="saved-filter-text">All Builds</div>
                 	</div>
 
@@ -59,7 +60,7 @@
 
 		<div class="main-view container">
 			<div class="builds-container container">
-				<h1 style="color: white">{{ filterName }}</h1>
+				<h1 style="color: white">{{ currentFilterObject.name }}</h1>
 				<div ng-repeat="build in filteredLastCompletedBuilds | statusSorter:'status' track by $index">
 					
 					<div class="col-md-3 col-sm-6 col-lg-3 build-outer-box">

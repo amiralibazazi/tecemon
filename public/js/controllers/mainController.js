@@ -6,7 +6,7 @@ module.controller('mainController', ['$scope', '$q', '$interval', 'teamcityServi
 	$scope.allBuildTypes = [];
 	$scope.allLastCompletedBuilds = [];
 	$scope.filteredLastCompletedBuilds = [];
-	$scope.savedFilters = tecemonService.getAllFilters();
+	$scope.savedFilters = [];
 	$scope.buildTypeFilter = "";
 	$scope.filterName = "";
 	$scope.defaultFilterObject = {"id": null, "filterTerm": "", "name": ""}
@@ -33,9 +33,18 @@ module.controller('mainController', ['$scope', '$q', '$interval', 'teamcityServi
 	}
 
 	var refreshView = function() {
-		console.log("Refreshing View");
+		console.log("Refreshing Filters");
 		getLastCompletedBuilds()
-		.then($scope.applyFilterToAllBuilds($scope.currentFilterObject.filterTerm, $scope.currentFilterObject.name))
+		.then($scope.applyFilterToAllBuilds($scope.currentFilterObject.filterTerm, $scope.currentFilterObject.name));
+		$scope.getAllFilters();
+	}
+
+	$scope.getAllFilters = function() {
+		console.log("Refreshing Filters");
+		tecemonService.getAllFilters()
+		.then(function(filters) {
+			$scope.savedFilters = filters
+		});
 	}
 
 	$scope.applyFilterToAllBuilds = function(filterTerm, name) {
@@ -49,18 +58,20 @@ module.controller('mainController', ['$scope', '$q', '$interval', 'teamcityServi
 
 	$scope.saveFilterObject = function(filterTerm, name) {
 		if (name == "") {name = filterTerm};
-		$scope.savedFilters.push(newFilter(filterTerm, name));
+		console.log("Saving new filter : " + name)
+		tecemonService.save((newFilter(filterTerm, name)))
+		$scope.getAllFilters();
 	}
 
 	$scope.removeFilterTerm = function(filterObject) {
-		for (var i = $scope.savedFilters.length - 1; i >= 0; i--) {
-    		if ($scope.savedFilters[i].id === filterObject.id) {$scope.savedFilters.splice(i, 1);}
-		}
+		tecemonService.deleteFilter(filterObject)
+		$scope.getAllFilters();
 	}
 
 	$scope.allBuildTypes = teamcityService.getAllBuildTypes()
 		.then(function(buildTypes) {$scope.allBuildTypes = buildTypes; $scope.filteredLastCompletedBuilds = buildTypes})
 		.then(getLastCompletedBuilds)
 
+	$scope.getAllFilters();
 	$interval(refreshView, 10000);
 }]);
