@@ -2,15 +2,12 @@ var module = angular.module('tecemonController', ['teamcityservice', 'filters'])
 
 module.controller('mainController', ['$scope', '$q', '$interval', 'teamcityService', 'tecemonService',
 							function($scope, $q, $interval, teamcityService, tecemonService) {
-	$scope.filteredProjects = [];
 	$scope.allBuildTypes = [];
 	$scope.allLastCompletedBuilds = [];
 	$scope.filteredLastCompletedBuilds = [];
 	$scope.savedFilters = [];
-	$scope.buildTypeFilter = "";
-	$scope.filterName = "";
-	$scope.defaultFilterObject = {"id": null, "filterTerm": "", "name": ""}
-	$scope.currentFilterObject = $scope.defaultFilterObject;
+	$scope.defaultFilter = {id: null,filterTerm: '',name: ''};
+	$scope.currentFilter = $scope.defaultFilter;
 
 	var getLastCompletedBuilds = function() {
 		var lastCompletedBuilds = [];		
@@ -24,47 +21,43 @@ module.controller('mainController', ['$scope', '$q', '$interval', 'teamcityServi
 		return $q.defer().promise;
 	};
 
-	var newFilter = function(filterTerm, name) {
-		return filterObject = {
-			"id": Date.now(),
-			"filterTerm": filterTerm,
-			"name": name
-		}
+	var withId = function(filter) {
+		var min = 100000000000; var max = 900000000000
+		filter.id = Math.floor(Math.random() * (max - min)) + min;
+		return filter;
 	}
 
 	var refreshView = function() {
-		console.log("Refreshing Filters");
+		console.log("Refreshing View");
 		getLastCompletedBuilds()
-		.then($scope.applyFilterToAllBuilds($scope.currentFilterObject.filterTerm, $scope.currentFilterObject.name));
-		$scope.getAllFilters();
+		.then($scope.applyFilterToAllBuilds($scope.currentFilter));
 	}
 
 	$scope.getAllFilters = function() {
-		console.log("Refreshing Filters");
+		console.log("Refreshing Filters : " + JSON.stringify($scope.savedFilters));
 		tecemonService.getAllFilters()
 		.then(function(filters) {
 			$scope.savedFilters = filters
 		});
 	}
 
-	$scope.applyFilterToAllBuilds = function(filterTerm, name) {
-		if (name) $scope.filterName = name;
-		var regex = new RegExp(filterTerm,"ig");
-		$scope.currentFilterObject = newFilter(filterTerm, name);
+	$scope.applyFilterToAllBuilds = function(filter) {
+		var regex = new RegExp(filter.filterTerm,"ig");
+		$scope.currentFilter = filter;
 		$scope.filteredLastCompletedBuilds = $scope.allBuildTypes.filter(function(buildType) {
 			return regex.test(JSON.stringify(buildType));
 		});
 	}
 
-	$scope.saveFilterObject = function(filterTerm, name) {
-		if (name == "") {name = filterTerm};
-		console.log("Saving new filter : " + name)
-		tecemonService.save((newFilter(filterTerm, name)))
-		$scope.getAllFilters();
+	$scope.saveFilter = function(filter) {
+		if (!filter.name) {filter.name = filter.filterTerm};
+		console.log("Saving new filter : " + filter.name)
+		tecemonService.save(withId(filter))
+		$scope.getAllFilters();	
 	}
 
-	$scope.removeFilterTerm = function(filterObject) {
-		tecemonService.deleteFilter(filterObject)
+	$scope.removeFilterTerm = function(filter) {
+		tecemonService.deleteFilter(filter)
 		$scope.getAllFilters();
 	}
 

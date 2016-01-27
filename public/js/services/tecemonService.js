@@ -20,9 +20,9 @@ tecemonService.service('tecemonService', ['$http', '$q', function($http, $q) {
 			});
 	};
 
-	tecemonService.deleteFilter = function(filterObject) {
-		console.log("Deleting filter with id: " + filterObject.id)
-		return $http.delete('/filters/'+filterObject.id) 
+	tecemonService.deleteFilter = function(filter) {
+		console.log("Deleting filter with id: " + filter.id)
+		return $http.delete('/filters/'+filter.id) 
 			.then(function(response) {
 				return response;
 			});
