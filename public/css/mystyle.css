@@ -107,15 +107,15 @@ body {
     margin-top: 8pt;
 }
 
-.green-color {
+.success {
 	background-color: #78D699;
 }
 
-.red-color {
+.failure {
 	background-color: #BF4949;
 }
 
-.grey-color {
+.pending {
 	background-color: #838587;
 }
 
