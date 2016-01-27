@@ -21,10 +21,8 @@ body {
 
 .main-view {
 	padding-top: 5pt;
-	margin: 0 5% 0 5%;
 	left: 0;
 	right: 0;
-	padding-left: 250pt;
 }
 
 .text-box {
@@ -49,45 +47,16 @@ body {
 }
 
 .build-outer-box {
-	white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 	padding: 3pt;
-}
-
-.build-inner-box-success {
-	background-color: #78D699;
-	color: black;
-	border-radius: 3pt;
-	padding: 3pt
-}
-
-.build-failure {
-	background-color: #BF4949;
-	color: black;
-	border-radius: 3pt;
-	padding: 3pt
-}
-
-.build-success {
-	background-color: #78D699;
-	color: black;
-	border-radius: 3pt;
-	padding: 3pt
-}
-
-.build-pending {
-	background-color: #838587;
-	color: black;
-	border-radius: 3pt;
-	padding: 3pt
 }
 
 .build-inner-box {
 	color: black;
 	border-radius: 3pt;
 	padding: 3pt;
-	height: 60pt;
+	height: 75pt;
 	overflow: hidden;
 }
 
@@ -119,6 +88,8 @@ body {
     height: 16px; 
     border-radius: 2px;
     max-width: 98%;
+    -webkit-box-shadow: inset 0 0 0 rgba(0,0,0,0); 
+    box-shadow: inset 0 0 0 rgba(0,0,0,0); 
 }
 
 .close-filter-button {
@@ -136,12 +107,16 @@ body {
     margin-top: 8pt;
 }
 
-.green-color {
+.success {
 	background-color: #78D699;
 }
 
-.red-color {
+.failure {
 	background-color: #BF4949;
+}
+
+.pending {
+	background-color: #838587;
 }
 
 .sidebar {
@@ -150,7 +125,7 @@ body {
     bottom: 0;
     left : -250pt;
     transition : 100ms left;
-    z-index: 1;
+    z-index: 2;
     background-color: #616363;
     padding: 10pt;
 }
@@ -163,7 +138,7 @@ body {
         padding : 5px;
         margin-top: 10pt;
         border-radius: 0 5px 5px 0;
-        z-index: 2;
+        z-index: 1;
         padding-left: 35pt;
 }
 
@@ -175,6 +150,17 @@ body {
 	padding-left: 0;
 }
 
-.navigation-items a:hover {
-    background-color : #222;
+.build-name-text {
+	font: 16pt bold arial, sans-serif;
+}
+
+.project-name-text {
+	font: 12pt arial, sans-serif;
+	white-space: nowrap;
+  	overflow: hidden;
+  	text-overflow: ellipsis;
+}
+
+h1 {
+	font-size: 45pt;
 }
