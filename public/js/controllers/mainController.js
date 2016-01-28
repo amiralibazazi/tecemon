@@ -9,7 +9,7 @@ module.controller('mainController', ['$scope', '$q', '$interval', 'teamcityServi
 	$scope.defaultFilter = {id: null,filterTerm: '',name: ''};
 	$scope.currentFilter = $scope.defaultFilter;
 
-	$scope.checkboxModel = {
+	$scope.checkboxes = {
        SUCCESS : true,
        PENDING : true,
        FAILURE : true

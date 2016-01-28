@@ -35,18 +35,18 @@
 	            <div class="sidebar" sidebar-directive="state">
 	                <a href="#" id="navigation-toggle" ng-click="toggleNavBar()">▶</a>
 	                <ul class="navigation">
-	                
+
 	                	<img src="./resources/Crowdmix_C_Icon_Mono_RGB_White.png" class="crowdmix-logo">
 	                	<p><input placeholder="Enter regex here" ng-model="filter.filterTerm" class="text-box" ng-keypress="$event.keyCode == 13 ? applyFilterToAllBuilds(filter) : null"></p>
-	                	<p><input placeholder="Name (optional)" ng-model="filter.name" class="text-box"></p>
+	                	<p><input placeholder="Name (optional)" ng-model="filter.name" class="text-box" ng-keypress="$event.keyCode == 13 ? applyFilterToAllBuilds(filter) : null"></p>
 	                	<div class="button-container">
 	                		<button ng-click="applyFilterToAllBuilds(filter)" class="filter-button"> Filter Builds </button>
 	                		<button ng-click="saveFilter(filter)" class="filter-button">Save</button>
 	                	</div>
 
-  						<label>SUCCESS: <input type="checkbox" ng-model="checkboxModel.SUCCESS"></label>
-  						<label>PENDING: <input type="checkbox" ng-model="checkboxModel.PENDING"></label>
-   						<label>FAILURE: <input type="checkbox" ng-model="checkboxModel.FAILURE"></label>
+  						<label>SUCCESS: <input type="checkbox" ng-model="checkboxes.SUCCESS"></label>
+  						<label>PENDING: <input type="checkbox" ng-model="checkboxes.PENDING"></label>
+   						<label>FAILURE: <input type="checkbox" ng-model="checkboxes.FAILURE"></label>
 
                 		<div ng-click="applyFilterToAllBuilds(defaultFilter)" class="saved-filter-box">
                     		<div class="saved-filter-text">All Builds</div>
@@ -68,7 +68,7 @@
 					<div ng-repeat="build in filteredLastCompletedBuilds | statusSorter:'status' track by $index">
 
 						<div ng-if="build.status == 'SUCCESS'">
-							<div ng-show="checkboxModel.SUCCESS" class="col-md-3 col-sm-6 col-lg-2 build-outer-box">
+							<div ng-show="checkboxes.SUCCESS" class="col-md-3 col-sm-6 col-lg-2 build-outer-box">
 								<a style="display:block" href="{{ build.webUrl }}" target="_blank">
 									<div ng-model="buildBox" class="build-inner-box success"
 										 ng-class="{'running' : build.state == 'running'}" >
@@ -83,7 +83,7 @@
 						</div>
 
 						<div ng-if="build.status == 'PENDING'">
-							<div ng-show="checkboxModel.PENDING" class="col-md-3 col-sm-6 col-lg-2 build-outer-box">
+							<div ng-show="checkboxes.PENDING" class="col-md-3 col-sm-6 col-lg-2 build-outer-box">
 								<a style="display:block" href="{{ build.webUrl }}" target="_blank">
 									<div ng-model="buildBox" class="build-inner-box pending"
 										 ng-class="{'running' : build.state == 'running'}" >
@@ -98,7 +98,7 @@
 						</div>
 
 						<div ng-if="build.status == 'FAILURE'">
-							<div ng-show="checkboxModel.FAILURE" class="col-md-3 col-sm-6 col-lg-2 build-outer-box">
+							<div ng-show="checkboxes.FAILURE" class="col-md-3 col-sm-6 col-lg-2 build-outer-box">
 								<a style="display:block" href="{{ build.webUrl }}" target="_blank">
 									<div ng-model="buildBox" class="build-inner-box failure"
 										 ng-class="{'running' : build.state == 'running'}" >
