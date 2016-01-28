@@ -79,7 +79,7 @@ body {
 
 .progress-bar {
 	overflow: hidden;
-	position: absolute;
+	position: relative;
     height: 16px; 
     border-radius: 2px;
     max-width: 98%;

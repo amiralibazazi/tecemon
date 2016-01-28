@@ -66,8 +66,8 @@
 				<div class="builds-container" constrict-directive="state">
 					<h1 style="color: white">{{ currentFilter.name }}</h1>
 					<div ng-repeat="build in filteredLastCompletedBuilds | statusSorter:'status' track by $index">
-						<div class="col-md-3 col-sm-6 col-lg-2 build-outer-box" ng-show="checkboxes[''+build.status]">
-							<a style="display:block" href="{{ build.webUrl }}" target="_blank">
+						<a style="display:block" href="{{ build.webUrl }}" target="_blank">
+							<div class="col-md-3 col-sm-6 col-lg-2 build-outer-box" ng-show="checkboxes[''+build.status]">
 								<div ng-model="buildBox" class="build-inner-box"
 									 ng-class="{'running' : build.state == 'running',
 										   		'success' : build.status == 'SUCCESS', 
@@ -76,10 +76,10 @@
 									<div class="project-name-text">{{ build.projectName }}</div>
 									<div class="build-name-text">{{ build.name }}</div>
 									<div ng-class="{'progress-bar-background' : build.state == 'running'}">
-									<div ng-class="{'success' :  build.status == 'SUCCESS', 'failure' :  build.status == 'FAILURE'}" class="progress-bar" style="width: {{build.percentageComplete}}%">		
+									<div ng-class="{'success' :  build.status == 'SUCCESS', 'failure' :  build.status == 'FAILURE'}" class="progress-bar" style="width: {{build.percentageComplete}}%"></div>	
 								</div>
-							 </a>
-						</div>
+							</div>
+						</a>
 					</div>
 				</div>
 			</div>
