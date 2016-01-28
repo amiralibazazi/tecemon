@@ -9,6 +9,12 @@ module.controller('mainController', ['$scope', '$q', '$interval', 'teamcityServi
 	$scope.defaultFilter = {id: null,filterTerm: '',name: ''};
 	$scope.currentFilter = $scope.defaultFilter;
 
+	$scope.checkboxModel = {
+       SUCCESS : true,
+       PENDING : true,
+       FAILURE : true
+    };
+
 	var getLastCompletedBuilds = function() {
 		var lastCompletedBuilds = [];		
 		angular.forEach($scope.allBuildTypes, function(buildType) {
