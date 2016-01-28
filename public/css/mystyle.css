@@ -36,6 +36,10 @@ body {
 	margin-bottom: 10pt;
 }
 
+.builds-container {
+
+}
+
 .build-outer-box {
     overflow: hidden;
     text-overflow: ellipsis;
@@ -143,8 +147,8 @@ body {
     left : 0;
 }
 
-.bumpMain {
-	left: 250pt;
+.constrict {
+	margin-left: 220pt;
 }
 
 .navigation {
