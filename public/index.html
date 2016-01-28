@@ -35,18 +35,22 @@
 	            <div class="sidebar" sidebar-directive="state">
 	                <a href="#" id="navigation-toggle" ng-click="toggleNavBar()">▶</a>
 	                <ul class="navigation">
+
 	                	<img src="./resources/Crowdmix_C_Icon_Mono_RGB_White.png" class="crowdmix-logo">
 	                	<p><input placeholder="Enter regex here" ng-model="filter.filterTerm" class="text-box" ng-keypress="$event.keyCode == 13 ? applyFilterToAllBuilds(filter) : null"></p>
-	                	<p><input placeholder="Name (optional)" ng-model="filter.name" class="text-box"></p>
+	                	<p><input placeholder="Name (optional)" ng-model="filter.name" class="text-box" ng-keypress="$event.keyCode == 13 ? applyFilterToAllBuilds(filter) : null"></p>
 	                	<div class="button-container">
 	                		<button ng-click="applyFilterToAllBuilds(filter)" class="filter-button"> Filter Builds </button>
 	                		<button ng-click="saveFilter(filter)" class="filter-button">Save</button>
 	                	</div>
 
-	                	<div ng-click="applyFilterToAllBuilds(defaultFilter);"
-	                	class="saved-filter-box">
-	                    	<div class="saved-filter-text">All Builds</div>
-	                	</div>
+  						<label>SUCCESS: <input type="checkbox" ng-model="checkboxes.SUCCESS"></label>
+  						<label>PENDING: <input type="checkbox" ng-model="checkboxes.PENDING"></label>
+   						<label>FAILURE: <input type="checkbox" ng-model="checkboxes.FAILURE"></label>
+
+                		<div ng-click="applyFilterToAllBuilds(defaultFilter)" class="saved-filter-box">
+                    		<div class="saved-filter-text">All Builds</div>
+                		</div>
 
 	                	<div ng-repeat="savedFilter in savedFilters track by $index">
 	                    	<div class="saved-filter-box" ng-click="applyFilterToAllBuilds(savedFilter)">
@@ -61,8 +65,8 @@
 			<div class="main-view container-fluid">
 				<div class="builds-container" constrict-directive="state">
 					<h1 style="color: white">{{ currentFilter.name }}</h1>
-					<div ng-repeat="build in filteredLastCompletedBuilds | statusSorter:'status' track by $index">		
-						<div class="col-md-3 col-sm-6 col-lg-2 build-outer-box">
+					<div ng-repeat="build in filteredLastCompletedBuilds | statusSorter:'status' track by $index">
+						<div class="col-md-3 col-sm-6 col-lg-2 build-outer-box" ng-show="checkboxes[''+build.status]">
 							<a style="display:block" href="{{ build.webUrl }}" target="_blank">
 								<div ng-model="buildBox" class="build-inner-box"
 									 ng-class="{'running' : build.state == 'running',
@@ -72,10 +76,9 @@
 									<div class="project-name-text">{{ build.projectName }}</div>
 									<div class="build-name-text">{{ build.name }}</div>
 									<div ng-class="{'progress-bar-background' : build.state == 'running'}">
-										<div ng-class="{'success' :  build.status == 'SUCCESS', 'failure' :  build.status == 'FAILURE'}" class="progress-bar" style="width: {{build.percentageComplete}}%"></div>
-									</div>
+									<div ng-class="{'success' :  build.status == 'SUCCESS', 'failure' :  build.status == 'FAILURE'}" class="progress-bar" style="width: {{build.percentageComplete}}%">		
 								</div>
-							</a>
+							 </a>
 						</div>
 					</div>
 				</div>
