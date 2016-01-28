@@ -1,7 +1,7 @@
 var module = angular.module('tecemonController', ['teamcityservice', 'filters']);
 
-module.controller('mainController', ['$scope', '$q', '$interval', 'teamcityService', 'tecemonService',
-							function($scope, $q, $interval, teamcityService, tecemonService) {
+module.controller('mainController', ['$scope', '$q', '$interval', 'teamcityService', 'filterService',
+							function($scope, $q, $interval, teamcityService, filterService) {
 	$scope.allBuildTypes = [];
 	$scope.allLastCompletedBuilds = [];
 	$scope.filteredLastCompletedBuilds = [];
@@ -41,7 +41,7 @@ module.controller('mainController', ['$scope', '$q', '$interval', 'teamcityServi
 
 	$scope.getAllFilters = function() {
 		console.log("Refreshing Filters : " + JSON.stringify($scope.savedFilters));
-		tecemonService.getAllFilters()
+		filterService.getAllFilters()
 		.then(function(filters) {
 			$scope.savedFilters = filters
 		});
@@ -58,12 +58,12 @@ module.controller('mainController', ['$scope', '$q', '$interval', 'teamcityServi
 	$scope.saveFilter = function(filter) {
 		if (!filter.name) {filter.name = filter.filterTerm};
 		console.log("Saving new filter : " + filter.name)
-		tecemonService.save(withId(filter))
+		filterService.save(withId(filter))
 		$scope.getAllFilters();	
 	}
 
 	$scope.removeFilterTerm = function(filter) {
-		tecemonService.deleteFilter(filter)
+		filterService.deleteFilter(filter)
 		$scope.getAllFilters();
 	}
 
