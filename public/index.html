@@ -71,6 +71,7 @@
 			<div class="main-view container-fluid">
 				<div class="builds-container" constrict-directive="state">
 					<h1 style="color: white">{{ currentFilter.name }}</h1>
+					<div style="color: grey; font-style: italic">Regular Expression: /{{currentFilter.filterTerm}}/ig</div>
 					<div ng-repeat="build in filteredLastCompletedBuilds | statusSorter:'status' track by $index">
 						<a style="display:block" href="{{ build.webUrl }}" target="_blank">
 							<div class="col-md-3 col-sm-6 col-lg-3 build-outer-box" ng-show="checkboxes[''+build.status]">
