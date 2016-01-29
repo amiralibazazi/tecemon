@@ -50,7 +50,7 @@ body {
 	color: black;
 	border-radius: 3pt;
 	padding: 3pt;
-	height: 75pt;
+	height: 100pt;
 	overflow: hidden;
 }
 
@@ -69,7 +69,7 @@ body {
 	overflow: hidden;
 	position: relative;
     margin-top: 5pt;
-    height: 20px; 
+    height: 20pt; 
     width: 100%;
     background-color: #2F3030;
     border-radius: 5px;
@@ -80,7 +80,7 @@ body {
 .progress-bar {
 	overflow: hidden;
 	position: relative;
-    height: 16px; 
+    height: 17pt; 
     border-radius: 2px;
     max-width: 98%;
     -webkit-box-shadow: inset 0 0 0 rgba(0,0,0,0); 
@@ -156,11 +156,11 @@ body {
 }
 
 .build-name-text {
-	font: 16pt bold arial, sans-serif;
+	font: 25pt bold arial, sans-serif;
 }
 
 .project-name-text {
-	font: 12pt arial, sans-serif;
+	font: 18pt arial, sans-serif;
 	white-space: nowrap;
   	overflow: hidden;
   	text-overflow: ellipsis;
