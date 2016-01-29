@@ -6,6 +6,7 @@ module.controller('mainController', ['$scope', '$q', '$interval', 'teamcityServi
 	$scope.allLastCompletedBuilds = [];
 	$scope.filteredLastCompletedBuilds = [];
 	$scope.savedFilters = [];
+	$scope.filter = {};
 	$scope.defaultFilter = {id: null,filterTerm: '',name: ''};
 	$scope.currentFilter = $scope.defaultFilter;
 
@@ -59,7 +60,8 @@ module.controller('mainController', ['$scope', '$q', '$interval', 'teamcityServi
 		if (!filter.name) {filter.name = filter.filterTerm};
 		console.log("Saving new filter : " + filter.name)
 		filterService.save(withId(filter))
-		$scope.getAllFilters();	
+		$scope.getAllFilters();
+		$scope.filter = {};
 	}
 
 	$scope.removeFilterTerm = function(filter) {

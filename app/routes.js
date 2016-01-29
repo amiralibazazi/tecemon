@@ -40,6 +40,9 @@ module.exports = function(app) {
 	app.delete('/filters/:id', function(req, res) {
 		var filterId = req.params.id
 		console.log("Deleting filter with id : " + JSON.stringify(filterId));
+		if (savedFilters.length == 1) {
+			savedFilters = [];
+		}
 		for (var i = savedFilters.length - 1; i >= 0; i--) {
     		if (savedFilters[i].id == filterId) {savedFilters.splice(i, 1);};
 		};
