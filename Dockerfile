@@ -8,5 +8,5 @@ RUN cd /src; npm install
 
 COPY . /src
 
-EXPOSE 1234
+EXPOSE 8080
 CMD ["node", "/src/app.js"]
