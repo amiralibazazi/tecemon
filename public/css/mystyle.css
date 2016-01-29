@@ -47,56 +47,46 @@ body {
 }
 
 .build-inner-box {
-	color: black;
+	color: #DFE3E8;
 	border-radius: 3pt;
-	padding: 3pt;
-	height: 100pt;
+	padding: 5pt;
+	height: 114pt;
+	overflow: hidden;
+}
+
+.saved-filter-box-outer{
+	cursor: pointer;
+	background-color: #C4C8CC;
+	border-radius: 3px;
+	margin-bottom: 5pt;
+	height: 30pt;
 	overflow: hidden;
 }
 
 .saved-filter-box {
-	cursor: pointer;
-    height: 30pt;
-    background-color: #5A98D6; 
-    width: auto;
-    overflow: hidden;
-    position: relative;
-    border-radius: 3px;
-    margin-bottom: 5pt;
+    text-align: center;
 }
 
 .progress-bar-background {
 	overflow: hidden;
 	position: relative;
     margin-top: 5pt;
-    height: 20pt; 
+    height: 19.5pt; 
     width: 100%;
     background-color: #2F3030;
     border-radius: 5px;
-    padding: 2px;
+    padding: 3px 3px 3px 2px;
     bottom: 0;
 }
 
 .progress-bar {
 	overflow: hidden;
 	position: relative;
-    height: 17pt; 
+    height: 16pt; 
     border-radius: 2px;
     max-width: 98%;
     -webkit-box-shadow: inset 0 0 0 rgba(0,0,0,0); 
     box-shadow: inset 0 0 0 rgba(0,0,0,0); 
-}
-
-.close-filter-button {
-    position: absolute;
-    right: 0;
-    text-align: center; 
-    font-size: 8pt; 
-    height: 10pt; 
-    width: 10pt; 
-    font-weight: bold;
-    z-index: 3;
-    background-color: #5A98D6;
 }
 
 .saved-filter-text {
@@ -105,18 +95,22 @@ body {
 }
 
 .success {
+	color: #2F3030;
 	background-color: #38E876;
 }
 
 .failure {
+	color: #D7DBDE;
 	background-color: #D63E3E;
 }
 
 .pending {
+	color: #D7DBDE;
 	background-color: #838587;
 }
 
 .running {
+	color: #2F3030;
 	background-color: #E8CE38;
 }
 
