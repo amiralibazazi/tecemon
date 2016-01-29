@@ -2,8 +2,6 @@ var teamcityService = angular.module('teamcityservice', []);
 
 teamcityService.service('teamcityService', ['$http', '$q', function($http, $q) {
 	var teamcityService = this;
-	var allBuildTypesUrl = "https://teamcity.dev.crwd.mx/app/rest/buildTypes/?locator=count:10000";
-
 	var config = { 
 		headers: {
 			"Content-Type":"application/json;charset=utf-8",
@@ -12,7 +10,7 @@ teamcityService.service('teamcityService', ['$http', '$q', function($http, $q) {
 	}
 
 	teamcityService.getAllBuildTypes = function() {
-		return $http.get(allBuildTypesUrl, config)
+		return $http.get('/teamcity/allBuilds', config)
 					.then(
 						function(response) {
 							console.log("Successfully received BuildTypes from TeamCity");
@@ -26,7 +24,7 @@ teamcityService.service('teamcityService', ['$http', '$q', function($http, $q) {
 	}
 
 	teamcityService.constructLastCompletedBuildFor = function(buildType) {
-		return $http.get("https://teamcity.dev.crwd.mx/app/rest/buildTypes/id:"+buildType.id+"/builds/?locator=running:(any)")
+		return $http.get("/teamcity/lastCompletedBuild/"+buildType.id)
 			.then(
 				function(response) {
 					if (hasBuilds(response.data))
@@ -36,7 +34,7 @@ teamcityService.service('teamcityService', ['$http', '$q', function($http, $q) {
 					return buildType;
 				},
 				function(response) {
-					console.log("Failed to retrieve last successful build for <" + buildTypeId + ">");
+					console.log("Failed to retrieve last successful build for <" + buildType.id + ">");
 					$q.reject();
 				}
 			);
