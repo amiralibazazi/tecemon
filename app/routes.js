@@ -1,5 +1,6 @@
 module.exports = function(app) {
 	var bodyParser = require('body-parser');
+	var https = require('https');
 	var multer = require('multer'); // v1.0.5
 
 	var options = {
@@ -11,10 +12,22 @@ module.exports = function(app) {
 		}
 	}
 
+	var teamcityOptions = {
+			host: 'teamcity.dev.crwd.mx',
+			path: '',
+			port: 443,
+			method: 'GET',
+			headers: {
+				"Content-Type":"application/json;charset=utf-8",
+				"Accept":"application/json",
+				"Authorization":"CHANGEME",
+			}
+	}
+
 	var savedFilters = [];
 
-	app.use(bodyParser.json()); // for parsing application/json
-	app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencode
+	app.use(bodyParser.json());
+	app.use(bodyParser.urlencoded({ extended: true }));
 
 	app.get('/', function(req, res) {
 		res.sendFile('./index.html', options, function(err) {
@@ -47,4 +60,53 @@ module.exports = function(app) {
     		if (savedFilters[i].id == filterId) {savedFilters.splice(i, 1);};
 		};
 	});
+
+	app.get('/teamcity/allBuilds', function(req, res) {
+		console.log("getting request");
+		var config = teamcityOptions;
+		config.path = '/app/rest/buildTypes/?locator=count:10000';
+
+		var request = https.request(config, (response) => {
+		  console.log('statusCode: ', response.statusCode);
+
+		  var bodyChunks = [];
+		  response.on('data', function(chunk) {
+		    bodyChunks.push(chunk);
+		  }).on('end', function() {
+		    var body = Buffer.concat(bodyChunks);
+		    console.log('BODY: ' + body);
+		    res.send(body);
+		  })
+		});
+
+		request.end();
+		request.on('error', (e) => {
+		  console.error(e);
+		});
+	});
+
+	app.get('/teamcity/lastCompletedBuild/:id', function(req, res) {
+		var buildTypeId = req.params.id;
+
+		var config = teamcityOptions;
+		teamcityOptions.path = "/app/rest/buildTypes/id:"+buildTypeId+"/builds/?locator=running:(any)";
+
+		var request = https.request(config, (response) => {
+		  console.log('statusCode: ', response.statusCode);
+
+		  var bodyChunks = [];
+		  response.on('data', function(chunk) {
+		    bodyChunks.push(chunk);
+		  }).on('end', function() {
+		    var body = Buffer.concat(bodyChunks);
+		    console.log('BODY: ' + body);
+		    res.send(body);
+		  })
+		});
+
+		request.end();
+		request.on('error', (e) => {
+		  console.error(e);
+		});
+	})
 }
