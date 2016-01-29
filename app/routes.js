@@ -66,7 +66,7 @@ module.exports = function(app) {
 		var config = teamcityOptions;
 		config.path = '/app/rest/buildTypes/?locator=count:10000';
 
-		var request = https.request(config, (response) => {
+		var request = https.request(config, function(response) {
 		  console.log('statusCode: ', response.statusCode);
 
 		  var bodyChunks = [];
@@ -80,7 +80,7 @@ module.exports = function(app) {
 		});
 
 		request.end();
-		request.on('error', (e) => {
+		request.on('error', function(e) {
 		  console.error(e);
 		});
 	});
@@ -91,7 +91,7 @@ module.exports = function(app) {
 		var config = teamcityOptions;
 		teamcityOptions.path = "/app/rest/buildTypes/id:"+buildTypeId+"/builds/?locator=running:(any)";
 
-		var request = https.request(config, (response) => {
+		var request = https.request(config, function(response) {
 		  console.log('statusCode: ', response.statusCode);
 
 		  var bodyChunks = [];
@@ -105,7 +105,7 @@ module.exports = function(app) {
 		});
 
 		request.end();
-		request.on('error', (e) => {
+		request.on('error', function(e) {
 		  console.error(e);
 		});
 	})
